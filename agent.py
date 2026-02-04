@@ -11,7 +11,7 @@ from datetime import datetime
 from schemas import AlertInput, ActionPlan
 from config import AgentConfig
 from memory import AgentMemory
-from engage_loader import EngageDataLoader
+from engage_loader import EngageLoader
 from decision_engine import DecisionEngine, RuleBasedDecisionEngine
 
 
@@ -43,7 +43,7 @@ class CyberDeceptionAgent:
         
         # Components
         self.memory: Optional[AgentMemory] = None
-        self.engage_loader: Optional[EngageDataLoader] = None
+        self.engage_loader: Optional[EngageLoader] = None
         self.decision_engine = None
         
         self._initialized = False
@@ -57,7 +57,7 @@ class CyberDeceptionAgent:
         print("  ✓ Memory initialized")
         
         # Load Engage data
-        self.engage_loader = EngageDataLoader(self.config.engage_data_path)
+        self.engage_loader = EngageLoader(self.config.engage_data_path)
         if not self.engage_loader.load():
             print("  ✗ Failed to load Engage data")
             return False
@@ -92,9 +92,10 @@ class CyberDeceptionAgent:
         print(f"{'='*60}")
         
         # Get ATT&CK mapping info
-        mapping = self.engage_loader.get_attack_mapping(alert.attack_id)
+        mapping = self.engage_loader.get_technique_info(alert.attack_id)
         if mapping:
-            print(f"  ✓ ATT&CK Mapping: {mapping.attack_name} ({mapping.tactic})")
+            print(f"  ✓ ATT&CK Mapping: {mapping.technique_name}")
+            print(f"    Tactics: {', '.join(mapping.tactics)}")
             print(f"  → Engage activities available: {len(mapping.engage_activities)}")
         else:
             print(f"  ⚠ No direct mapping for {alert.attack_id}")
@@ -160,7 +161,7 @@ class CyberDeceptionAgent:
         
         if self._initialized:
             status["memory"] = self.memory.get_memory_summary()
-            status["engage"] = self.engage_loader.get_summary()
+            status["engage"] = self.engage_loader.get_status()
         
         return status
     

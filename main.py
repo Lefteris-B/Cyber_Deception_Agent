@@ -80,10 +80,11 @@ Examples:
     )
     
     parser.add_argument(
-        "--cleanup",
+        "--scada",
         action="store_true",
-        help="Cleanup agent memory and exit"
+        help="Run SCADA use case from paper (Cheimonidis & Rantos, 2025)"
     )
+    
     return parser.parse_args()
 
 
@@ -110,7 +111,6 @@ def interactive_mode(agent: CyberDeceptionAgent):
     print("  alert     - Process a new ATT&CK-based alert")
     print("  status    - Show agent status")
     print("  memory    - Show memory summary")
-    print("  cleanup   - Cleanup memory")
     print("  techniques- List available ATT&CK techniques")
     print("  trigger   - Report a deployment was triggered")
     print("  help      - Show this help")
@@ -126,7 +126,7 @@ def interactive_mode(agent: CyberDeceptionAgent):
                 break
             
             elif command == "help":
-                print("Commands: alert, status, memory, cleanup, techniques, trigger, help, quit")
+                print("Commands: alert, status, memory, techniques, trigger, help, quit")
             
             elif command == "status":
                 status = agent.get_status()
@@ -137,20 +137,17 @@ def interactive_mode(agent: CyberDeceptionAgent):
                     print(json.dumps(agent.memory.get_memory_summary(), indent=2))
                 else:
                     print("Memory not initialized")
-
-            elif command == "cleanup":
-                agent.cleanup_memory()
-
+            
             elif command == "techniques":
                 if agent.engage_loader:
-                    attack_ids = agent.engage_loader.get_all_attack_ids()
-                    print(f"\nAvailable ATT&CK techniques ({len(attack_ids)}):")
-                    for attack_id in sorted(attack_ids)[:20]:
-                        mapping = agent.engage_loader.get_attack_mapping(attack_id)
-                        if mapping:
-                            print(f"  {attack_id}: {mapping.attack_name} ({mapping.tactic})")
-                    if len(attack_ids) > 20:
-                        print(f"  ... and {len(attack_ids) - 20} more")
+                    techniques = agent.engage_loader.list_all_techniques()
+                    print(f"\nAvailable ATT&CK techniques ({len(techniques)}):")
+                    for tech in techniques[:20]:
+                        print(f"  {tech['attack_id']}: {tech['name']}")
+                        print(f"    Tactics: {', '.join(tech['tactics'])}")
+                        print(f"    Engage: {tech['engage_activities']}")
+                    if len(techniques) > 20:
+                        print(f"  ... and {len(techniques) - 20} more")
                 else:
                     print("Engage loader not initialized")
             
@@ -200,6 +197,70 @@ def interactive_mode(agent: CyberDeceptionAgent):
             print(f"Error: {e}")
 
 
+def run_scada_scenario(agent: CyberDeceptionAgent):
+    """Run the SCADA use case from the paper."""
+    try:
+        from scada_usecase import ScadaSimulator
+    except ImportError:
+        print("Error: scada_usecase.py not found")
+        return
+    
+    sim = ScadaSimulator()
+    sim.print_scenario()
+    
+    print("\n" + "="*60)
+    print("PROCESSING ATTACK SEQUENCE WITH DECEPTION AGENT")
+    print("="*60)
+    
+    alerts = sim.simulate_attack_sequence()
+    for i, alert_data in enumerate(alerts, 1):
+        print(f"\n{'='*60}")
+        print(f"[PHASE {i}] {alert_data['metadata'].get('phase', '').upper()}")
+        print(f"{'='*60}")
+        print(f"CVE: {alert_data['metadata'].get('cve_id')}")
+        print(f"ATT&CK: {alert_data['attack_id']}")
+        print(f"Target: {alert_data['affected_assets']}")
+        print(f"Threat Score: {alert_data['probability']:.3f}")
+        
+        alert = AlertInput(
+            attack_id=alert_data["attack_id"],
+            probability=alert_data["probability"],
+            affected_assets=alert_data["affected_assets"],
+            observed_indicators={"source_ip": alert_data.get("source_ip", "unknown")}
+        )
+        
+        response = agent.process_alert(alert)
+        print(f"\n--- Deception Response ---")
+        print(f"Threat Level: {response.threat_level.upper()}")
+        print(f"Actions Recommended: {len(response.recommended_actions)}")
+        for action in response.recommended_actions:
+            print(f"  • [{action.engage_activity_id}] {action.action_type}")
+            print(f"    Target: {action.parameters.get('target_systems', action.parameters.get('placement', 'N/A'))}")
+            if action.rationale:
+                desc = action.rationale[:60] + "..." if len(action.rationale) > 60 else action.rationale
+                print(f"    Purpose: {desc}")
+        
+        if i < len(alerts):
+            try:
+                input("\nPress Enter to continue to next phase... ")
+            except EOFError:
+                pass
+    
+    print("\n" + "="*60)
+    print("ATTACK SEQUENCE COMPLETE - FINAL MEMORY STATE")
+    print("="*60)
+    if agent.memory:
+        summary = agent.memory.get_memory_summary()
+        print(json.dumps(summary, indent=2))
+    
+    # Show escalation detection
+    if agent.memory:
+        escalation = agent.memory.detect_attack_escalation()
+        if escalation:
+            print("\n⚠️  ATTACK ESCALATION DETECTED")
+            print(f"   Stages observed: {escalation.get('stages', [])}")
+
+
 def main():
     args = parse_args()
     
@@ -226,15 +287,17 @@ def main():
     
     # List techniques and exit if requested
     if args.list_techniques:
-        attack_ids = agent.engage_loader.get_all_attack_ids()
-        print(f"\nATT&CK Techniques with Engage mappings ({len(attack_ids)}):\n")
-        for attack_id in sorted(attack_ids):
-            mapping = agent.engage_loader.get_attack_mapping(attack_id)
-            if mapping:
-                activities = agent.engage_loader.get_activities_for_technique(attack_id)
-                print(f"  {attack_id}: {mapping.attack_name}")
-                print(f"    Tactic: {mapping.tactic}")
-                print(f"    Engage activities: {[a.id for a in activities]}")
+        techniques = agent.engage_loader.list_all_techniques()
+        print(f"\nATT&CK Techniques with Engage mappings ({len(techniques)}):\n")
+        for tech in techniques:
+            print(f"  {tech['attack_id']}: {tech['name']}")
+            print(f"    Tactics: {', '.join(tech['tactics'])}")
+            print(f"    Engage activities: {tech['engage_activities']}")
+        return
+    
+    # Run SCADA scenario if requested
+    if args.scada:
+        run_scada_scenario(agent)
         return
     
     # Process alert from command line

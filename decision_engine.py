@@ -4,7 +4,6 @@ Integrates LLM reasoning with MITRE ATT&CK and Engage frameworks.
 """
 
 import json
-import os
 import uuid
 from typing import Optional
 from anthropic import Anthropic
@@ -12,7 +11,7 @@ from anthropic import Anthropic
 from schemas import AlertInput, EngageAction, ActionPlan, AlertRecord
 from config import AgentConfig, THREAT_LEVEL_STRATEGIES, get_tactic_phase
 from memory import AgentMemory
-from engage_loader import EngageDataLoader, EngageActivity, AttackMapping
+from engage_loader import EngageLoader, EngageActivity, AttackMapping
 
 
 class ThreatClassifier:
@@ -42,16 +41,13 @@ class DecisionEngine:
         self,
         config: AgentConfig,
         memory: AgentMemory,
-        engage_loader: EngageDataLoader
+        engage_loader: EngageLoader
     ):
         self.config = config
         self.memory = memory
         self.engage_loader = engage_loader
         self.classifier = ThreatClassifier(config)
-        api_key = os.getenv("ANTHROPIC_API_KEY")
-        if not api_key:
-            raise RuntimeError("ANTHROPIC_API_KEY not set")
-        self.client = Anthropic(api_key=api_key)
+        self.client = Anthropic()
     
     def decide(self, alert: AlertInput) -> ActionPlan:
         """Main decision method. Analyzes alert and returns an action plan."""
@@ -60,10 +56,10 @@ class DecisionEngine:
         threat_level = self.classifier.classify(alert.probability)
         
         # Step 2: Get ATT&CK mapping and Engage activities
-        mapping = self.engage_loader.get_attack_mapping(alert.attack_id)
+        mapping = self.engage_loader.get_technique_info(alert.attack_id)
         if mapping:
-            alert.attack_name = mapping.attack_name
-            alert.tactic = mapping.tactic
+            alert.attack_name = mapping.technique_name
+            alert.tactic = mapping.tactics[0] if mapping.tactics else "Unknown"
         
         activities = self.engage_loader.get_activities_for_technique(alert.attack_id)
         activities = self.engage_loader.filter_activities_by_threat_level(activities, threat_level)
@@ -385,7 +381,7 @@ class RuleBasedDecisionEngine:
         self,
         config: AgentConfig,
         memory: AgentMemory,
-        engage_loader: EngageDataLoader
+        engage_loader: EngageLoader
     ):
         self.config = config
         self.memory = memory
@@ -398,42 +394,42 @@ class RuleBasedDecisionEngine:
         threat_level = self.classifier.classify(alert.probability)
         
         # Get mapping and update alert
-        mapping = self.engage_loader.get_attack_mapping(alert.attack_id)
+        mapping = self.engage_loader.get_technique_info(alert.attack_id)
         if mapping:
-            alert.attack_name = mapping.attack_name
-            alert.tactic = mapping.tactic
+            alert.attack_name = mapping.technique_name
+            alert.tactic = mapping.tactics[0] if mapping.tactics else "Unknown"
         
         # Get and filter activities
         activities = self.engage_loader.get_activities_for_technique(alert.attack_id)
         activities = self.engage_loader.filter_activities_by_threat_level(activities, threat_level)
         
-        # Limit to max actions
-        max_actions = self.engage_loader.get_max_actions_for_threat_level(threat_level)
+        # Limit to max actions from threat config
+        config = self.engage_loader.get_threat_config(threat_level)
+        max_actions = config.max_actions if config else 2
         selected_activities = activities[:max_actions]
         
         # Convert to actions
         actions = []
         for activity in selected_activities:
             params = {}
-            for param in activity.parameters:
-                if param == "placement" and alert.affected_assets:
-                    params[param] = alert.affected_assets[0]
-                elif param == "target_systems" and alert.affected_assets:
-                    params[param] = alert.affected_assets
-                elif param == "network_segment":
-                    params[param] = alert.observed_indicators.get("source_network", "default-segment")
-                else:
-                    params[param] = f"{{{{auto_{param}}}}}"
+            # Set basic parameters
+            if alert.affected_assets:
+                params["target_systems"] = alert.affected_assets
+                params["placement"] = alert.affected_assets[0]
+            
+            source_ip = alert.observed_indicators.get("source_ip")
+            if source_ip:
+                params["source_ip"] = source_ip
             
             action = EngageAction(
                 action_id=str(uuid.uuid4()),
                 engage_activity_id=activity.id,
                 engage_activity_name=activity.name,
-                action_type=activity.action_type,
+                action_type=activity.name,  # Use activity name as action type
                 priority="high" if threat_level in ["high", "critical"] else "medium",
                 parameters=params,
                 rationale=activity.description,
-                tactic=activity.tactic
+                tactic=activity.goals[0] if activity.goals else "Expose"
             )
             actions.append(action)
         

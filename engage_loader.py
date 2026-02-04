@@ -1,170 +1,271 @@
 """
-Engage Framework data loader for the Cyber Deception Agent.
-Loads MITRE Engage activities and ATT&CK mappings.
+MITRE Engage Framework Data Loader
+
+Loads official MITRE Engage data including:
+- Goals (Expose, Affect, Elicit, Prepare, Understand)
+- Approaches (Collect, Detect, Prevent, Direct, Disrupt, Reassure, Motivate)
+- Activities (EAC0001-EAC0023 Engagement + SAC Strategic)
+- ATT&CK Technique Mappings (175+ techniques)
 """
 
 import json
 import os
-from pathlib import Path
-from typing import Optional
 from dataclasses import dataclass, field
+from typing import Dict, List, Optional, Any
+from pathlib import Path
 
 
 @dataclass
 class EngageActivity:
-    """Represents a MITRE Engage activity."""
+    """Represents a MITRE Engage Activity."""
     id: str
     name: str
-    tactic: str
     description: str
-    action_type: str
-    parameters: list[str] = field(default_factory=list)
-    
-    def get_default_parameters(self) -> dict:
-        """Get default parameter structure for this activity."""
-        return {param: f"{{{{placeholder_{param}}}}}" for param in self.parameters}
+    long_description: str = ""
+    activity_type: str = "Engagement"  # Engagement or Strategic
+    goals: List[str] = field(default_factory=list)
+    approaches: List[str] = field(default_factory=list)
+    attack_tactics: List[str] = field(default_factory=list)
 
 
-@dataclass 
+@dataclass
+class EngageApproach:
+    """Represents a MITRE Engage Approach."""
+    id: str
+    name: str
+    description: str
+    approach_type: str = "Engagement"
+    activities: List[str] = field(default_factory=list)
+
+
+@dataclass
+class EngageGoal:
+    """Represents a MITRE Engage Goal."""
+    id: str
+    name: str
+    description: str
+    goal_type: str = "Engagement"
+    approaches: List[str] = field(default_factory=list)
+
+
+@dataclass
 class AttackMapping:
-    """Maps an ATT&CK technique to Engage activities."""
+    """Represents mapping from ATT&CK technique to Engage activities."""
     attack_id: str
-    attack_name: str
-    tactic: str
-    engage_activities: list[str]  # List of EAC IDs
+    technique_name: str
+    tactics: List[str] = field(default_factory=list)
+    engage_activities: List[str] = field(default_factory=list)
 
 
-class EngageDataLoader:
-    """Loads and manages MITRE Engage framework data."""
+@dataclass
+class ThreatLevelConfig:
+    """Configuration for a threat level."""
+    threshold: float
+    max_actions: int
+    action_types: List[str]
+    description: str
+
+
+class EngageLoader:
+    """Loads and provides access to MITRE Engage framework data."""
     
-    def __init__(self, data_path: str = "./data/engage_data.json"):
-        self.data_path = Path(data_path)
-        self._activities: dict[str, EngageActivity] = {}
-        self._attack_mappings: dict[str, AttackMapping] = {}
-        self._threat_level_configs: dict[str, dict] = {}
+    def __init__(self, data_path: str):
+        self.data_path = data_path
+        self.goals: Dict[str, EngageGoal] = {}
+        self.approaches: Dict[str, EngageApproach] = {}
+        self.activities: Dict[str, EngageActivity] = {}
+        self.attack_mappings: Dict[str, AttackMapping] = {}
+        self.threat_levels: Dict[str, ThreatLevelConfig] = {}
         self._loaded = False
-    
+        
     def load(self) -> bool:
-        """Load Engage data from JSON file."""
-        if not self.data_path.exists():
+        """Load the Engage data from JSON file."""
+        if not os.path.exists(self.data_path):
             print(f"Warning: Engage data file not found: {self.data_path}")
             return False
-        
+            
         try:
             with open(self.data_path, 'r') as f:
                 data = json.load(f)
             
-            # Load activities
-            for eac_id, activity_data in data.get("engage_activities", {}).items():
-                impl = activity_data.get("implementation", {})
-                activity = EngageActivity(
-                    id=activity_data.get("id", eac_id),
-                    name=activity_data.get("name", "Unknown"),
-                    tactic=activity_data.get("tactic", "Expose"),
-                    description=activity_data.get("description", ""),
-                    action_type=impl.get("action_type", "unknown"),
-                    parameters=impl.get("parameters", [])
+            # Load goals
+            for goal_id, goal_data in data.get("goals", {}).items():
+                self.goals[goal_id] = EngageGoal(
+                    id=goal_id,
+                    name=goal_data["name"],
+                    description=goal_data["description"],
+                    goal_type=goal_data.get("type", "Engagement"),
+                    approaches=goal_data.get("approaches", [])
                 )
-                self._activities[eac_id] = activity
+            
+            # Load approaches
+            for app_id, app_data in data.get("approaches", {}).items():
+                self.approaches[app_id] = EngageApproach(
+                    id=app_id,
+                    name=app_data["name"],
+                    description=app_data["description"],
+                    approach_type=app_data.get("type", "Engagement"),
+                    activities=app_data.get("activities", [])
+                )
+            
+            # Load activities
+            for act_id, act_data in data.get("activities", {}).items():
+                self.activities[act_id] = EngageActivity(
+                    id=act_id,
+                    name=act_data["name"],
+                    description=act_data["description"],
+                    long_description=act_data.get("long_description", ""),
+                    activity_type=act_data.get("type", "Engagement"),
+                    goals=act_data.get("goals", []),
+                    approaches=act_data.get("approaches", []),
+                    attack_tactics=act_data.get("attack_tactics", [])
+                )
             
             # Load ATT&CK mappings
-            for mapping_data in data.get("attack_mappings", []):
-                attack_id = mapping_data.get("attack_id")
-                mapping = AttackMapping(
+            for attack_id, mapping_data in data.get("attack_mappings", {}).items():
+                self.attack_mappings[attack_id] = AttackMapping(
                     attack_id=attack_id,
-                    attack_name=mapping_data.get("attack_name", "Unknown"),
-                    tactic=mapping_data.get("tactic", "Unknown"),
+                    technique_name=mapping_data["technique_name"],
+                    tactics=mapping_data.get("tactics", []),
                     engage_activities=mapping_data.get("engage_activities", [])
                 )
-                self._attack_mappings[attack_id] = mapping
             
-            # Load threat level configurations
-            self._threat_level_configs = data.get("threat_level_configurations", {})
+            # Load threat levels
+            for level_name, level_data in data.get("threat_levels", {}).items():
+                self.threat_levels[level_name] = ThreatLevelConfig(
+                    threshold=level_data["threshold"],
+                    max_actions=level_data["max_actions"],
+                    action_types=level_data["action_types"],
+                    description=level_data["description"]
+                )
             
             self._loaded = True
-            print(f"Loaded {len(self._activities)} Engage activities")
-            print(f"Loaded {len(self._attack_mappings)} ATT&CK technique mappings")
+            print(f"Loaded {len(self.activities)} Engage activities")
+            print(f"Loaded {len(self.attack_mappings)} ATT&CK technique mappings")
             return True
             
         except Exception as e:
             print(f"Error loading Engage data: {e}")
             return False
     
-    def get_activity(self, eac_id: str) -> Optional[EngageActivity]:
-        """Get an Engage activity by ID."""
-        return self._activities.get(eac_id)
+    def is_loaded(self) -> bool:
+        """Check if data is loaded."""
+        return self._loaded
     
-    def get_activities_for_technique(self, attack_id: str) -> list[EngageActivity]:
-        """Get all Engage activities mapped to an ATT&CK technique."""
-        mapping = self._attack_mappings.get(attack_id)
-        if not mapping:
-            # Try parent technique if this is a sub-technique
-            if "." in attack_id:
-                parent_id = attack_id.split(".")[0]
-                mapping = self._attack_mappings.get(parent_id)
-        
-        if not mapping:
+    def get_activities_for_technique(self, attack_id: str) -> List[EngageActivity]:
+        """Get Engage activities mapped to an ATT&CK technique."""
+        if attack_id not in self.attack_mappings:
             return []
         
+        mapping = self.attack_mappings[attack_id]
         activities = []
-        for eac_id in mapping.engage_activities:
-            activity = self._activities.get(eac_id)
-            if activity:
-                activities.append(activity)
-        
+        for act_id in mapping.engage_activities:
+            if act_id in self.activities:
+                activities.append(self.activities[act_id])
         return activities
     
-    def get_attack_mapping(self, attack_id: str) -> Optional[AttackMapping]:
-        """Get the ATT&CK mapping for a technique."""
-        mapping = self._attack_mappings.get(attack_id)
-        if not mapping and "." in attack_id:
-            # Fall back to parent technique
-            parent_id = attack_id.split(".")[0]
-            mapping = self._attack_mappings.get(parent_id)
-        return mapping
+    def get_technique_info(self, attack_id: str) -> Optional[AttackMapping]:
+        """Get technique mapping info."""
+        return self.attack_mappings.get(attack_id)
     
-    def get_allowed_activities_for_threat_level(self, threat_level: str) -> list[str]:
-        """Get list of allowed EAC IDs for a threat level."""
-        config = self._threat_level_configs.get(threat_level.lower(), {})
-        return config.get("allowed_activities", list(self._activities.keys()))
+    def get_threat_level(self, probability: float) -> str:
+        """Determine threat level from probability."""
+        if probability >= self.threat_levels.get("critical", ThreatLevelConfig(0.9, 10, [], "")).threshold:
+            return "critical"
+        elif probability >= self.threat_levels.get("high", ThreatLevelConfig(0.7, 6, [], "")).threshold:
+            return "high"
+        elif probability >= self.threat_levels.get("medium", ThreatLevelConfig(0.5, 4, [], "")).threshold:
+            return "medium"
+        else:
+            return "low"
     
-    def get_max_actions_for_threat_level(self, threat_level: str) -> int:
-        """Get maximum actions allowed for a threat level."""
-        config = self._threat_level_configs.get(threat_level.lower(), {})
-        return config.get("max_actions", 5)
+    def get_threat_config(self, level: str) -> Optional[ThreatLevelConfig]:
+        """Get configuration for a threat level."""
+        return self.threat_levels.get(level)
     
     def filter_activities_by_threat_level(
-        self,
-        activities: list[EngageActivity],
+        self, 
+        activities: List[EngageActivity], 
         threat_level: str
-    ) -> list[EngageActivity]:
-        """Filter activities to only those allowed at given threat level."""
-        allowed_ids = self.get_allowed_activities_for_threat_level(threat_level)
-        return [a for a in activities if a.id in allowed_ids]
+    ) -> List[EngageActivity]:
+        """Filter and limit activities based on threat level."""
+        config = self.get_threat_config(threat_level)
+        if not config:
+            return activities[:2]  # Default conservative limit
+        
+        # For now, just limit by max_actions
+        # Could add more sophisticated filtering based on action_types
+        return activities[:config.max_actions]
     
-    def get_all_activities(self) -> list[EngageActivity]:
-        """Get all loaded Engage activities."""
-        return list(self._activities.values())
+    def get_activities_by_goal(self, goal_name: str) -> List[EngageActivity]:
+        """Get all activities that serve a particular goal."""
+        return [
+            act for act in self.activities.values()
+            if goal_name in act.goals
+        ]
     
-    def get_all_attack_ids(self) -> list[str]:
-        """Get all ATT&CK technique IDs with mappings."""
-        return list(self._attack_mappings.keys())
+    def get_activities_by_approach(self, approach_id: str) -> List[EngageActivity]:
+        """Get all activities for a particular approach."""
+        if approach_id not in self.approaches:
+            return []
+        return [
+            self.activities[act_id]
+            for act_id in self.approaches[approach_id].activities
+            if act_id in self.activities
+        ]
     
-    def get_summary(self) -> dict:
-        """Get summary of loaded data."""
-        tactics_covered = set()
-        for mapping in self._attack_mappings.values():
-            tactics_covered.add(mapping.tactic)
+    def get_engagement_activities(self) -> List[EngageActivity]:
+        """Get only engagement (tactical) activities, not strategic."""
+        return [
+            act for act in self.activities.values()
+            if act.activity_type == "Engagement"
+        ]
+    
+    def get_strategic_activities(self) -> List[EngageActivity]:
+        """Get only strategic activities."""
+        return [
+            act for act in self.activities.values()
+            if act.activity_type == "Strategic"
+        ]
+    
+    def list_all_techniques(self) -> List[Dict[str, Any]]:
+        """List all mapped ATT&CK techniques."""
+        return [
+            {
+                "attack_id": mapping.attack_id,
+                "name": mapping.technique_name,
+                "tactics": mapping.tactics,
+                "engage_activities": mapping.engage_activities
+            }
+            for mapping in sorted(
+                self.attack_mappings.values(), 
+                key=lambda x: x.attack_id
+            )
+        ]
+    
+    def get_status(self) -> Dict[str, Any]:
+        """Get loader status for diagnostics."""
+        if not self._loaded:
+            return {"loaded": False}
+        
+        # Count engagement vs strategic activities
+        engagement_count = len([a for a in self.activities.values() if a.activity_type == "Engagement"])
+        strategic_count = len([a for a in self.activities.values() if a.activity_type == "Strategic"])
+        
+        # Get unique tactics covered
+        all_tactics = set()
+        for mapping in self.attack_mappings.values():
+            all_tactics.update(mapping.tactics)
         
         return {
-            "loaded": self._loaded,
-            "total_activities": len(self._activities),
-            "total_attack_mappings": len(self._attack_mappings),
-            "tactics_covered": list(tactics_covered),
-            "activity_ids": list(self._activities.keys()),
-            "threat_levels_configured": list(self._threat_level_configs.keys())
+            "loaded": True,
+            "total_activities": len(self.activities),
+            "engagement_activities": engagement_count,
+            "strategic_activities": strategic_count,
+            "total_attack_mappings": len(self.attack_mappings),
+            "total_goals": len(self.goals),
+            "total_approaches": len(self.approaches),
+            "tactics_covered": sorted(list(all_tactics)),
+            "activity_ids": sorted([a.id for a in self.activities.values() if a.id.startswith("EAC")]),
+            "threat_levels_configured": list(self.threat_levels.keys())
         }
-    
-    def get_activities_by_tactic(self, engage_tactic: str) -> list[EngageActivity]:
-        """Get all activities for a specific Engage tactic."""
-        return [a for a in self._activities.values() if a.tactic == engage_tactic]
