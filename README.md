@@ -62,7 +62,7 @@ python main.py --create-samples
 python main.py
 
 # Process a single alert
-python main.py --alert '{"capec_id": "CAPEC-98", "probability": 0.85, "affected_assets": ["endpoint-01"]}'
+python main.py --alerts '{"capec_id": "CAPEC-98", "probability": 0.85, "affected_assets": ["endpoint-01"]}'
 
 # Rule-based mode (no LLM)
 python main.py --no-llm
