@@ -1,10 +1,14 @@
 """
+DEMO - DEMO - DEMO - DEMO - DEMO - DEMO - DEMO - DEMO - DEMO - DEMO - DEMO
+
 SCADA Use Case Simulation from Paper:
 "A novel proactive and dynamic cyber risk assessment methodology"
 (Cheimonidis & Rantos, 2025)
 
 This module simulates the paper's SCADA environment for testing the
 cyber deception agent with realistic CVE/ATT&CK data.
+
+DEMO - DEMO - DEMO - DEMO - DEMO - DEMO - DEMO - DEMO - DEMO - DEMO - DEMO
 """
 
 import json
