@@ -79,6 +79,11 @@ Examples:
         help="List available ATT&CK technique mappings"
     )
     
+    parser.add_argument(
+        "--cleanup",
+        action="store_true",
+        help="Cleanup agent memory and exit"
+    )
     return parser.parse_args()
 
 
@@ -105,6 +110,7 @@ def interactive_mode(agent: CyberDeceptionAgent):
     print("  alert     - Process a new ATT&CK-based alert")
     print("  status    - Show agent status")
     print("  memory    - Show memory summary")
+    print("  cleanup   - Cleanup memory")
     print("  techniques- List available ATT&CK techniques")
     print("  trigger   - Report a deployment was triggered")
     print("  help      - Show this help")
@@ -120,7 +126,7 @@ def interactive_mode(agent: CyberDeceptionAgent):
                 break
             
             elif command == "help":
-                print("Commands: alert, status, memory, techniques, trigger, help, quit")
+                print("Commands: alert, status, memory, cleanup, techniques, trigger, help, quit")
             
             elif command == "status":
                 status = agent.get_status()
@@ -131,7 +137,10 @@ def interactive_mode(agent: CyberDeceptionAgent):
                     print(json.dumps(agent.memory.get_memory_summary(), indent=2))
                 else:
                     print("Memory not initialized")
-            
+
+            elif command == "cleanup":
+                agent.cleanup_memory()
+
             elif command == "techniques":
                 if agent.engage_loader:
                     attack_ids = agent.engage_loader.get_all_attack_ids()
