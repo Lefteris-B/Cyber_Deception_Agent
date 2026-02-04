@@ -215,15 +215,15 @@ class DecisionEngine:
         # Format available Engage activities
         activities_str = ""
         for activity in activities:
+            goal_str = activity.goals[0] if activity.goals else "Expose"
             activities_str += f"""
   {activity.id} - {activity.name}
-    Tactic: {activity.tactic}
+    Goal: {goal_str}
     Description: {activity.description}
-    Action Type: {activity.action_type}
-    Parameters: {', '.join(activity.parameters)}
 """
         
-        max_actions = self.engage_loader.get_max_actions_for_threat_level(threat_level)
+        config = self.engage_loader.get_threat_config(threat_level)
+        max_actions = config.max_actions if config else 4
         
         prompt = f"""You are a cyber deception agent using the MITRE Engage framework to respond to threats detected via MITRE ATT&CK.
 
@@ -339,11 +339,11 @@ Respond with valid JSON only:
                     action_id=str(uuid.uuid4()),
                     engage_activity_id=activity.id,
                     engage_activity_name=activity.name,
-                    action_type=activity.action_type,
+                    action_type=activity.name,
                     priority="medium",
-                    parameters=activity.get_default_parameters(),
+                    parameters={},
                     rationale=f"Fallback: {activity.description}",
-                    tactic=activity.tactic
+                    tactic=activity.goals[0] if activity.goals else "Expose"
                 )
                 return (
                     [fallback_action],
