@@ -1,322 +1,3092 @@
 {
   "metadata": {
-    "name": "MITRE Engage Framework Data",
+    "source": "MITRE Engage",
     "version": "1.0",
-    "description": "Engage activities mapped to ATT&CK techniques for cyber deception",
-    "source": "https://engage.mitre.org"
+    "description": "Official MITRE Engage framework data for cyber deception",
+    "url": "https://engage.mitre.org/"
   },
-  "engage_activities": {
+  "goals": {
+    "EGO0001": {
+      "id": "EGO0001",
+      "name": "Expose",
+      "description": "Reveal the presence of ongoing adversary operations.",
+      "type": "Engagement",
+      "approaches": [
+        "EAP0001",
+        "EAP0002"
+      ]
+    },
+    "EGO0002": {
+      "id": "EGO0002",
+      "name": "Affect",
+      "description": "Negatively impact the adversaries operations.",
+      "type": "Engagement",
+      "approaches": [
+        "EAP0003",
+        "EAP0004",
+        "EAP0005"
+      ]
+    },
+    "EGO0003": {
+      "id": "EGO0003",
+      "name": "Elicit",
+      "description": "Learn about adversaries tactics, techniques, and procedures (TTPs).",
+      "type": "Engagement",
+      "approaches": [
+        "EAP0006",
+        "EAP0007"
+      ]
+    },
+    "SGO0001": {
+      "id": "SGO0001",
+      "name": "Prepare",
+      "description": "Help the defender think about what they want to accomplish with operations.",
+      "type": "Strategic",
+      "approaches": [
+        "SAP0001"
+      ]
+    },
+    "SGO0002": {
+      "id": "SGO0002",
+      "name": "Understand",
+      "description": "Make sure that the defender is capturing, utilizing, and refining knowledge learned to improve the defender\u2019s posture.",
+      "type": "Strategic",
+      "approaches": [
+        "SAP0002"
+      ]
+    }
+  },
+  "approaches": {
+    "EAP0001": {
+      "id": "EAP0001",
+      "name": "Collect",
+      "description": "Gather adversary tools, observe tactics, and collect other raw intelligence about the adversary\u2019s activity.",
+      "type": "Engagement",
+      "activities": [
+        "EAC0001",
+        "EAC0002",
+        "EAC0014",
+        "EAC0003"
+      ]
+    },
+    "EAP0002": {
+      "id": "EAP0002",
+      "name": "Detect",
+      "description": "Establish or maintain awareness regarding adversary activity.",
+      "type": "Engagement",
+      "activities": [
+        "EAC0005",
+        "EAC0013",
+        "EAC0004",
+        "EAC0023"
+      ]
+    },
+    "EAP0003": {
+      "id": "EAP0003",
+      "name": "Prevent",
+      "description": "Stop all or part of the adversary\u2019s ability to conduct their operation as intended.",
+      "type": "Engagement",
+      "activities": [
+        "EAC0019",
+        "EAC0017",
+        "EAC0020",
+        "EAC0016",
+        "EAC0018"
+      ]
+    },
+    "EAP0004": {
+      "id": "EAP0004",
+      "name": "Direct",
+      "description": "Encourage or discourage the adversary from conducting their operation as intended.",
+      "type": "Engagement",
+      "activities": [
+        "EAC0005",
+        "EAC0013",
+        "EAC0009",
+        "EAC0021",
+        "EAC0016",
+        "EAC0010",
+        "EAC0018",
+        "EAC0014",
+        "EAC0023"
+      ]
+    },
+    "EAP0005": {
+      "id": "EAP0005",
+      "name": "Disrupt",
+      "description": "Impair an adversary\u2019s ability to conduct their operation as intended.",
+      "type": "Engagement",
+      "activities": [
+        "EAC0005",
+        "EAC0020",
+        "EAC0016",
+        "EAC0014"
+      ]
+    },
+    "EAP0006": {
+      "id": "EAP0006",
+      "name": "Reassure",
+      "description": "Add authenticity to deceptive components to convince an adversary that an environment is real.",
+      "type": "Engagement",
+      "activities": [
+        "EAC0006",
+        "EAC0022",
+        "EAC0008",
+        "EAC0009",
+        "EAC0015",
+        "EAC0007",
+        "EAC0010",
+        "EAC0011"
+      ]
+    },
+    "EAP0007": {
+      "id": "EAP0007",
+      "name": "Motivate",
+      "description": "Encourage an adversary to conduct part or all of their mission.",
+      "type": "Engagement",
+      "activities": [
+        "EAC0006",
+        "EAC0022",
+        "EAC0013",
+        "EAC0015",
+        "EAC0012",
+        "EAC0007",
+        "EAC0023"
+      ]
+    },
+    "SAP0001": {
+      "id": "SAP0001",
+      "name": "Plan",
+      "description": "Identify and align an operation with a desired end-state.",
+      "type": "Strategic",
+      "activities": [
+        "SAC0004",
+        "SAC0012",
+        "SAC0005",
+        "SAC0001",
+        "SAC0002",
+        "SAC0003",
+        "SAC0009"
+      ]
+    },
+    "SAP0002": {
+      "id": "SAP0002",
+      "name": "Analyze",
+      "description": "Retrospective review of information gained from an operation .",
+      "type": "Strategic",
+      "activities": [
+        "SAC0006",
+        "SAC0004",
+        "SAC0009"
+      ]
+    }
+  },
+  "activities": {
     "EAC0001": {
       "id": "EAC0001",
-      "name": "Honeypots",
-      "tactic": "Expose",
-      "description": "Deploy a system with no authorized user activity that is intended to be targeted by adversaries.",
-      "implementation": {
-        "action_type": "deploy_honeypot",
-        "parameters": ["honeypot_type", "network_segment", "services", "interaction_level"]
-      }
+      "name": "API Monitoring",
+      "description": "Monitor local APIs that might be used by adversary tools and activity.",
+      "long_description": "API Monitoring involves capturing an internal OS function for its usage, accompanying arguments, and result. When a defender captures this information, the data gathered can be analyzed to gain insights into the activity of an adversary at a level deeper than normal system activity monitoring. This type of monitoring can also be used to produce high-fidelity detections. For example, the defender can trace activity through WinSock TCP API functions to view potentially malicious network events or trace usage of the Win32 DeleteFile() function to log all attempts at deleting a given file.",
+      "type": "Engagement",
+      "goals": [
+        "Expose"
+      ],
+      "approaches": [
+        "EAP0001"
+      ],
+      "attack_tactics": [
+        "Discovery",
+        "Defense Evasion",
+        "Lateral Movement",
+        "Initial Access",
+        "Execution",
+        "Command and Control",
+        "Privilege Escalation",
+        "Impact",
+        "Credential Access",
+        "Persistence"
+      ]
     },
     "EAC0002": {
       "id": "EAC0002",
-      "name": "Honeytokens",
-      "tactic": "Expose",
-      "description": "Deploy deceptive data or credentials intended to trigger alerts when accessed.",
-      "implementation": {
-        "action_type": "deploy_honeytoken",
-        "parameters": ["token_type", "placement", "appearance", "alert_on_access"]
-      }
+      "name": "Network Monitoring",
+      "description": "Monitor network traffic in order to detect adversary activity.",
+      "long_description": "Network Monitoring involves capturing network activity data, including capturing server, firewall, and other relevant logs. A defender can send this data to a centralized collection location for further analysis. This analysis can be automated or manual. In either case, a defender can use Network Monitoring to identify anomalous traffic patterns, large or unexpected data transfers, and other activity that may reveal the presence of an adversary.  Monitoring is essential to maintain situational awareness of adversary activities to ensure operational safety and make progress towards the defender\u2019s goals. Careful pre-operational planning should be done to properly instrument the engagement environment to ensure that all key network traffic is collected. Some use cases of network monitoring include detecting unexpected outbound traffic, systems establishing connections using encapsulated protocols, and known adversary C2 protocols.",
+      "type": "Engagement",
+      "goals": [
+        "Expose"
+      ],
+      "approaches": [
+        "EAP0001"
+      ],
+      "attack_tactics": [
+        "Command and Control",
+        "Exfiltration",
+        "Lateral Movement",
+        "Defense Evasion",
+        "Persistence",
+        "Impact",
+        "Credential Access",
+        "Collection"
+      ]
     },
     "EAC0003": {
       "id": "EAC0003",
       "name": "System Activity Monitoring",
-      "tactic": "Detect",
-      "description": "Monitor system activity to detect adversary behavior.",
-      "implementation": {
-        "action_type": "enable_monitoring",
-        "parameters": ["monitoring_type", "target_systems", "alert_threshold"]
-      }
+      "description": "Collect system activity logs that can reveal adversary activity.",
+      "long_description": "Capturing system logs can show logins, user and system events, etc. A defender can use such inherent system logging to study and collect first-hand observations about the adversary\u2019s actions and tools.  This data can be sent to a centralized collection location for further analysis. Careful planning should be used to guide which system logs are collected and at what level. If the logging level is set too high or too many system logs are collected, the defender may be blinded by the excess data. For example, understanding the adversary\u2019s known TTPs will highlight resources the adversary is likely to touch and therefore which system logs are likely to capture adversary activity.  Overall, System Activity Monitoring is essential to maintain situational awareness of adversarial activities in order to ensure operational safety and progress towards operational goals. Careful pre-operational planning should be done to properly instrument the engagement environment. This will ensure that all key network traffic is collected.",
+      "type": "Engagement",
+      "goals": [
+        "Expose"
+      ],
+      "approaches": [
+        "EAP0001"
+      ],
+      "attack_tactics": [
+        "Credential Access",
+        "Defense Evasion",
+        "Execution",
+        "Persistence",
+        "Privilege Escalation",
+        "Initial Access",
+        "Lateral Movement",
+        "Command and Control",
+        "Impact"
+      ]
     },
     "EAC0004": {
       "id": "EAC0004",
-      "name": "Network Monitoring",
-      "tactic": "Detect",
-      "description": "Monitor network traffic to detect adversary behavior.",
-      "implementation": {
-        "action_type": "enable_network_monitoring",
-        "parameters": ["network_segment", "capture_type", "analysis_rules"]
-      }
+      "name": "Network Analysis",
+      "description": "Analyze network traffic to gain intelligence on communications between systems.",
+      "long_description": "Network analysis can be an automated or manual task to review communications between systems to expose adversary activity, such as C2 or data exfiltration traffic. This analysis is normally done by capturing and analyzing traffic on the wire or from previously collected packet capture.  When custom protocols are in use, defenders can leverage protocol decoder frameworks. These are customized code modules that can read network traffic and contextualize activity between the C2 operator and the implant. These frameworks are often required to process complex encryption ciphers and custom protocols into a human-readable format for an analyst to interpret. Decoder creation requires malware analysis of the implant to understand the design of the protocol. While a high level of technical maturity is required to create such a decoder, once created they are invaluable to the defender.  For example, a defender can use a protocol decode to decrypt network capture data and expose an adversary\u2019s C2 or exfiltration activity. Not only does this data provide exquisite intelligence in regard to the adversary\u2019s communications channels and targeting preferences, but it also provides future opportunities for data manipulation to further operational goals.",
+      "type": "Engagement",
+      "goals": [
+        "Expose"
+      ],
+      "approaches": [
+        "EAP0002"
+      ],
+      "attack_tactics": [
+        "Command and Control",
+        "Exfiltration",
+        "Collection"
+      ]
     },
     "EAC0005": {
       "id": "EAC0005",
       "name": "Lures",
-      "tactic": "Affect",
-      "description": "Deploy deceptive artifacts to entice adversary interaction.",
-      "implementation": {
-        "action_type": "deploy_lure",
-        "parameters": ["lure_type", "placement", "target_behavior", "points_to"]
-      }
+      "description": "Deceptive systems and artifacts intended to serve as decoys, breadcrumbs, or bait to elicit a specific response from the adversary.",
+      "long_description": "Lures are intended to elicit a particular response from the adversary. For example, the defender may utilize Lures to enable or block the adversary\u2019s intended actions or encourage or discourage a specific action or response. Lures can take a variety of forms including credentials, accounts, files/directories, browser extensions/bookmarks, system processes, etc. Regardless of form, Lures provide opportunities to the defender to drive adversary behavior in ways that align with operational outcomes.",
+      "type": "Engagement",
+      "goals": [
+        "Expose",
+        "Affect"
+      ],
+      "approaches": [
+        "EAP0002",
+        "EAP0004",
+        "EAP0005"
+      ],
+      "attack_tactics": [
+        "Credential Access",
+        "Collection",
+        "Discovery",
+        "Exfiltration",
+        "Lateral Movement",
+        "Defense Evasion",
+        "Execution",
+        "Persistence",
+        "Privilege Escalation",
+        "Initial Access",
+        "Command and Control",
+        "Impact",
+        "Reconnaissance"
+      ]
     },
     "EAC0006": {
       "id": "EAC0006",
-      "name": "Decoy Accounts",
-      "tactic": "Expose",
-      "description": "Create user accounts with no legitimate purpose for adversaries to discover and target.",
-      "implementation": {
-        "action_type": "deploy_decoy_account",
-        "parameters": ["account_type", "privilege_level", "domain", "honeypot_target"]
-      }
+      "name": "Application Diversity",
+      "description": "Present the adversary with a variety of installed applications and services.",
+      "long_description": "Application Diversity presents an array of software targets to the adversary. On a single target system, defenders can configure multiple services or software applications. This diversity may include not only a variety of different types of applications, but also various versions of the same application. Application Diversity can be used to encourage engagement by offering a broad attack surface. By monitoring adversary activity in a diverse environment, the defender can gain information on the adversary\u2019s capabilities and targeting preferences. For example, a defender can install one or more applications with a variety of patch levels to see how the adversary\u2019s response differs across versions.  Additionally, a diverse set of applications provides a variety of avenues for the defender to present additional information throughout an operation. This information can be used to introduce additional attack surfaces, motivate or demotivate the adversary, or further the engagement narrative. For example, if the adversary is close to uncovering something that might raise suspicion around a target, the defender can add an event to a shared calendar application or a message in a notes application that the system will be offline for scheduled maintenance. Having a variety of applications on the system provides the defender with multiple engagement avenues to handle whatever events happen during the operation. Finally, diversity can increase the adversary\u2019s overall comfort level by adding to the believability of the environment. ",
+      "type": "Engagement",
+      "goals": [
+        "Elicit"
+      ],
+      "approaches": [
+        "EAP0006",
+        "EAP0007"
+      ],
+      "attack_tactics": [
+        "Discovery",
+        "Lateral Movement",
+        "Collection",
+        "Credential Access",
+        "Privilege Escalation",
+        "Execution",
+        "Persistence",
+        "Initial Access",
+        "Defense Evasion",
+        "Command and Control",
+        "Impact"
+      ]
     },
     "EAC0007": {
       "id": "EAC0007",
-      "name": "Decoy Credentials",
-      "tactic": "Expose",
-      "description": "Deploy fake credentials for adversaries to discover and attempt to use.",
-      "implementation": {
-        "action_type": "deploy_decoy_credentials",
-        "parameters": ["credential_type", "placement", "target_asset", "honeypot_target"]
-      }
+      "name": "Network Diversity",
+      "description": "Use a diverse set of devices on the network to help establish the legitimacy of a deceptive network.",
+      "long_description": "Network Diversity involves the use of an assorted collection of network resources such as networking devices, firewalls, printers, phones, etc. Network Diversity can be used to encourage adversaries to engage by offering a broad attack surface. Additionally, diversity can increase the adversary\u2019s overall comfort level by adding to the believability of the environment. By monitoring adversary activity in a diverse environment, the defender can gain information on the adversary\u2019s capabilities and targeting preferences. For example, a defender can deploy a variety of network resources to identify which devices are targeted by the adversary.",
+      "type": "Engagement",
+      "goals": [
+        "Elicit"
+      ],
+      "approaches": [
+        "EAP0006",
+        "EAP0007"
+      ],
+      "attack_tactics": [
+        "Discovery",
+        "Credential Access",
+        "Persistence",
+        "Initial Access",
+        "Impact",
+        "Collection",
+        "Reconnaissance"
+      ]
     },
     "EAC0008": {
       "id": "EAC0008",
-      "name": "Decoy Content",
-      "tactic": "Affect",
-      "description": "Deploy deceptive files or data that appear valuable to adversaries.",
-      "implementation": {
-        "action_type": "deploy_decoy_content",
-        "parameters": ["content_type", "placement", "appearance", "tracking_enabled"]
-      }
+      "name": "Burn-In",
+      "description": "Exercise a target system in a manner where it will generate desirable system artifacts.",
+      "long_description": "Burn-In involves exercising the system to create desirable system artifacts such as web browsing history, file system usage, or the running of user applications. At times, Burn-In can be accomplished by simply letting a system or application run for an extended period of time. Other times, the defender engages with the environment to produce the Burn-In artifacts, such as when the defender logs into a decoy account or accesses a decoy website to generate session cookies and browser history. These tasks can be accomplished manually or via automated tooling.  Burn-In should occur pre-operation and continue as appropriate during the operation. The artifacts generated during the Burn-In process can reassure the adversary of the environment\u2019s legitimacy by creating an environment that more closely resembles a real, lived in, system or network.",
+      "type": "Engagement",
+      "goals": [
+        "Elicit"
+      ],
+      "approaches": [
+        "EAP0006"
+      ],
+      "attack_tactics": [
+        "Collection",
+        "Discovery",
+        "Defense Evasion",
+        "Persistence",
+        "Privilege Escalation",
+        "Initial Access",
+        "Reconnaissance"
+      ]
     },
     "EAC0009": {
       "id": "EAC0009",
-      "name": "Decoy Networks",
-      "tactic": "Expose",
-      "description": "Deploy network segments that appear legitimate but are entirely monitored deception.",
-      "implementation": {
-        "action_type": "deploy_decoy_network",
-        "parameters": ["network_topology", "services", "connectivity", "monitoring_level"]
-      }
+      "name": "Email Manipulation",
+      "description": "Modify the flow of email in the environment.",
+      "long_description": "Email Manipulation covers the various ways email flows in the environment can be affected. Email Manipulation can affect which mail appliances process mail flows, where mail is forwarded, or what mail is present in an inbox. A common use case for email manipulation is as a vector to introduce malware into the engagement environment.  Suspicious emails may be removed from production mailbox and placed into an inbox in an engagement environment. Then, any suspicious attachments or links could be detonated from within the environment. As another example, emails collected over a long period of time from a legitimate inbox outside the environment may be moved into the environment to reassure the adversary of the environment\u2019s legitimacy by creating a mailbox that more closely resembles a real, lived-in inbox.",
+      "type": "Engagement",
+      "goals": [
+        "Affect",
+        "Elicit"
+      ],
+      "approaches": [
+        "EAP0004",
+        "EAP0006"
+      ],
+      "attack_tactics": [
+        "Collection",
+        "Initial Access"
+      ]
     },
     "EAC0010": {
       "id": "EAC0010",
-      "name": "Decoy Systems",
-      "tactic": "Expose",
-      "description": "Deploy systems that appear to be legitimate production assets but are monitored decoys.",
-      "implementation": {
-        "action_type": "deploy_decoy_system",
-        "parameters": ["system_type", "os", "services", "network_location"]
-      }
+      "name": "Peripheral Management",
+      "description": "Manage peripheral devices used on systems within the network for engagement purposes.",
+      "long_description": "Peripheral Management is the administration of peripheral devices used on systems within the engagement environment. A defender can choose to allow or deny certain types of peripherals from being used on systems to either motivate or demotivate adversary activity or to direct the adversary towards specific targets. Defenders can also introduce peripherals to an adversary-controlled system to see how the adversary reacts. For example, the defender can introduce external Wi-Fi adapters, USB devices, etc. to determine if adversaries attempt to use them for exfiltration purposes.  Additionally, peripherals provide an avenue for the defender to present new or additional information to the adversary. This information can be used to introduce an additional attack surface, motivate or demotivate adversary activity, or to further the deception story. For example, the defender may include data on a connected USB device or stage an important conversation near an externally connected camera or microphone. Depending on the contents of this data, the adversary may be encouraged to take a specific action and/or reassured about the legitimacy of the environment.",
+      "type": "Engagement",
+      "goals": [
+        "Affect",
+        "Elicit"
+      ],
+      "approaches": [
+        "EAP0004",
+        "EAP0006"
+      ],
+      "attack_tactics": [
+        "Collection",
+        "Exfiltration",
+        "Lateral Movement",
+        "Initial Access",
+        "Command and Control",
+        "Discovery"
+      ]
     },
     "EAC0011": {
       "id": "EAC0011",
       "name": "Pocket Litter",
-      "tactic": "Affect",
-      "description": "Deploy small deceptive artifacts that add believability to an environment.",
-      "implementation": {
-        "action_type": "deploy_pocket_litter",
-        "parameters": ["artifact_type", "placement", "content", "references"]
-      }
+      "description": "Data used to support the engagement narrative.",
+      "long_description": "Pocket Litter is data placed on a system to help tell the engagement narrative, to increase the credibility of an environment, and/or to establish a cognitive bias to raise the adversary\u2019s tolerance to weaknesses in the environment. Unlike Lures, Pocket Litter does not necessarily aim to encourage the adversary to take a specific action, but rather it supports the overall deception story.  Pocket Litter can include documents, pictures, registry entries, installed software, log history, browsing history, connection history, and other user data that an adversary would expect to exist on a user\u2019s computer. For example, a defender might conduct a series of web searches to generate browser artifacts, or scatter a variety of photos and documents across the desktop to make the computer feel lived in.",
+      "type": "Engagement",
+      "goals": [
+        "Elicit"
+      ],
+      "approaches": [
+        "EAP0006"
+      ],
+      "attack_tactics": [
+        "Credential Access",
+        "Collection",
+        "Discovery",
+        "Exfiltration",
+        "Execution",
+        "Defense Evasion",
+        "Persistence",
+        "Privilege Escalation",
+        "Initial Access",
+        "Command and Control",
+        "Impact",
+        "Lateral Movement",
+        "Reconnaissance"
+      ]
     },
     "EAC0012": {
       "id": "EAC0012",
-      "name": "Burn-in",
-      "tactic": "Prepare",
-      "description": "Create realistic activity history to make deception environments believable.",
-      "implementation": {
-        "action_type": "create_burn_in",
-        "parameters": ["activity_type", "duration", "target_systems", "patterns"]
-      }
+      "name": "Personas",
+      "description": "Create fictitious human user(s) through a combination of planted data and revealed behavior patterns.",
+      "long_description": "A Persona is used to establish background information about a victim to increase the believability of the target. To create a Persona, the defender must develop a backstory and seed the environment with varying data in support of this story. Depending on the need for realism, the constructed persona can be supported by evidence of hobbies, social and professional interactions, consumer transactions, employment, browsing habits, etc.  In addition to lending legitimacy to the environment, personas can be used to engage directly with adversaries, such as during phishing email exchanges. Additionally, personas can make changes to the environment during the operation, such as adding or removing a USB device or introducing new decoy documents or credentials.",
+      "type": "Engagement",
+      "goals": [
+        "Elicit"
+      ],
+      "approaches": [
+        "EAP0007"
+      ],
+      "attack_tactics": [
+        "Discovery",
+        "Defense Evasion",
+        "Persistence",
+        "Privilege Escalation",
+        "Initial Access",
+        "Command and Control",
+        "Collection",
+        "Execution",
+        "Credential Access",
+        "Impact",
+        "Reconnaissance"
+      ]
     },
     "EAC0013": {
       "id": "EAC0013",
-      "name": "Isolation",
-      "tactic": "Contain",
-      "description": "Isolate adversary activity to limit damage and enable observation.",
-      "implementation": {
-        "action_type": "isolate_system",
-        "parameters": ["isolation_type", "target", "allow_outbound", "monitoring"]
-      }
+      "name": "Malware Detonation",
+      "description": "Execute malware under controlled conditions to analyze its functionality.",
+      "long_description": "Malware can be detonated in a controlled and safe environment. Clear goals and safety procedures should always be established before detonation to ensure that the operation is focused and safe. The malware can be detonated in an execution environment ranging from a somewhat sterile commercial malware execution appliance to a bespoke engagement environment crafted to support an extended engagement.  Depending on operational objectives, the outcome of a malware detonation operation can include: collecting new IOCs during dynamic analysis,  observing additional TTPs by detonating the malware in a target rich environment, and/or negatively impacting the adversary and their operation. ",
+      "type": "Engagement",
+      "goals": [
+        "Expose",
+        "Affect",
+        "Elicit"
+      ],
+      "approaches": [
+        "EAP0002",
+        "EAP0004",
+        "EAP0007"
+      ],
+      "attack_tactics": [
+        "Defense Evasion",
+        "Execution",
+        "Command and Control",
+        "Impact"
+      ]
     },
     "EAC0014": {
       "id": "EAC0014",
-      "name": "Network Diversity",
-      "tactic": "Protect",
-      "description": "Deploy network configurations that increase adversary uncertainty.",
-      "implementation": {
-        "action_type": "configure_network_diversity",
-        "parameters": ["diversity_type", "segments", "rotation_policy"]
-      }
+      "name": "Software Manipulation",
+      "description": "Make changes to a system\u2019s software properties and functions to achieve a desired effect.",
+      "long_description": "Software Manipulation allows a defender to alter or replace elements of the OS, file system, or other software installed and executed on a system. These alterations can affect outputs, degrade effectiveness, and/or prevent the software from functioning altogether. For example, the defender can manipulate software by changing the output of commonly used discovery commands to hide legitimate systems and artifacts and/or reveal deceptive artifacts and systems.  Alternatively, the defender can change the output of the password policy description for an adversary attempting to brute-force credentials. This manipulation may cause the adversary to waste resources brute-forcing passwords with inaccurate complexity requirements. If the defender wanted to degrade software effectiveness, they might weaken algorithms to expose data that is being archived, encoded, and/or encrypted.  Finally, to prevent software from functioning altogether, the defender may cause failures in software typically used to delete data or hide adversary artifacts. For some Software Manipulation use cases, it may be possible to make changes in such a way that adversary actions and legitimate user actions are handled differently. For example, the defender could show all files when viewed in a graphical application but hide files or introduce decoy files when viewed via a terminal command. This setup would allow legitimate users full access to the file system, while manipulating access for adversaries using a reverse shell.",
+      "type": "Engagement",
+      "goals": [
+        "Expose",
+        "Affect"
+      ],
+      "approaches": [
+        "EAP0001",
+        "EAP0004",
+        "EAP0005"
+      ],
+      "attack_tactics": [
+        "Command and Control",
+        "Collection",
+        "Defense Evasion",
+        "Discovery",
+        "Credential Access",
+        "Execution",
+        "Persistence",
+        "Privilege Escalation",
+        "Lateral Movement",
+        "Initial Access",
+        "Impact"
+      ]
     },
     "EAC0015": {
       "id": "EAC0015",
       "name": "Information Manipulation",
-      "tactic": "Affect",
-      "description": "Manipulate information to mislead adversaries about the environment.",
-      "implementation": {
-        "action_type": "manipulate_information",
-        "parameters": ["manipulation_type", "target_data", "false_info", "scope"]
-      }
+      "description": "Conceal and reveal both facts and fictions to support a deception story",
+      "long_description": "Information Manipulation is used to support the engagement narrative and directly impact adversary activities. Revealed facts and fictions can be used to adjust the adversary\u2019s trust in the environment. Concealed facts and fiction can be used to adjust the adversary\u2019s sense of uncertainty towards the environment. Revealed facts may include OS type and version, geographic location, hardware type and version, accounts, credentials, etc. Revealed fictions may include the content of decoy files, emails, messages, etc. Revealed facts and fictions may or may not be believed by the adversary.  If an adversary believes a revealed fact or fiction, it may lend credibility to the environment or encourage a specific action. If an adversary is suspicious or does not believe a revealed fact or fiction, it may erode adversary trust in the environment or discourage a specific action. Therefore, revealed facts and fictions can be used to adjust the adversary\u2019s trust in the environment in ways that support the operational objectives.  <br><br>Concealed facts may include virtualized systems disguised as physical systems, monitoring software, or collection efforts. Concealed fictions may include an encrypted, interestingly named, decoy file or a partially deleted email thread referencing high value, but decoy, assets. Concealed facts and fictions may or may not be discovered by the adversary. If the adversary discovers a concealed fact or fiction, it may increase the ambiguity of the environment and affect the adversary\u2019s sense of uncertainty.  In this way, concealed facts and fictions can be used to adjust the ambiguity and affect the adversary\u2019s sense of uncertainty in ways that support the operational objectives",
+      "type": "Engagement",
+      "goals": [
+        "Elicit"
+      ],
+      "approaches": [
+        "EAP0006",
+        "EAP0007"
+      ],
+      "attack_tactics": [
+        "Command and Control",
+        "Collection",
+        "Discovery",
+        "Exfiltration",
+        "Defense Evasion",
+        "Execution",
+        "Lateral Movement",
+        "Impact",
+        "Reconnaissance"
+      ]
     },
     "EAC0016": {
       "id": "EAC0016",
       "name": "Network Manipulation",
-      "tactic": "Affect",
-      "description": "Manipulate network traffic to affect adversary operations.",
-      "implementation": {
-        "action_type": "manipulate_network",
-        "parameters": ["manipulation_type", "target_traffic", "effect", "duration"]
-      }
+      "description": "Make changes to network properties and functions to achieve a desired effect.",
+      "long_description": "Network Manipulation allows a defender to throttle network speeds, segment the network, maintain a unique IP addressing scheme, add a kill switch to cut off network access, etc. These types of manipulations can affect the adversary\u2019s ability to achieve their operational objectives by incurring an increased resource cost, forcing them to change tactics, or stopping them altogether.  For example, a defender can limit the allowed ports or network requests to force the adversary to alter their planned C2 or exfiltration channels. As another example, a defender could allow or deny outbound SMB requests from a network to affect the success of forced authentication. Additionally, the defender can degrade network speeds and reliability to impose a resource cost as adversaries exfiltrate large quantities of data. Finally, a defender can block primary C2 domains and IPs to determine if the adversary has additional infrastructure. While there are a range of network manipulation options, in all cases, the defender has an opportunity to learn about or influence the adversaries operating in the environment.",
+      "type": "Engagement",
+      "goals": [
+        "Affect"
+      ],
+      "approaches": [
+        "EAP0003",
+        "EAP0004",
+        "EAP0005"
+      ],
+      "attack_tactics": [
+        "Command and Control",
+        "Exfiltration",
+        "Discovery",
+        "Lateral Movement",
+        "Collection",
+        "Credential Access",
+        "Initial Access",
+        "Defense Evasion",
+        "Persistence",
+        "Impact",
+        "Reconnaissance",
+        "Execution"
+      ]
     },
     "EAC0017": {
       "id": "EAC0017",
-      "name": "Software Manipulation",
-      "tactic": "Affect",
-      "description": "Alter software behavior to mislead or detect adversaries.",
-      "implementation": {
-        "action_type": "manipulate_software",
-        "parameters": ["target_software", "manipulation_type", "trigger_conditions"]
-      }
+      "name": "Hardware Manipulation",
+      "description": "Alter the hardware configuration of a system to limit what an adversary can do with the device.",
+      "long_description": "Hardware Manipulation can include physical adjustments or configuration changes to the hardware in the environment. This manipulation can include physically removing a system\u2019s microphone, camera, on-board Wi-Fi adapter, etc. or using software controls to disable those devices. These types of manipulations can affect the adversary\u2019s ability to achieve their operational objectives by incurring an increased resource cost, forcing them to change tactics, or stopping them altogether.  Hardware Manipulation is often required to maintain operational safety. For example, if the operation includes Malware Detonation using a laptop physically located in a shared space, it is likely that the defender will not have the ability to hide the legitimate conversations and individuals present in the space. Unless the defender can control the background sounds and visuals, it is likely too risky to leave the camera and microphone connected to the machine.",
+      "type": "Engagement",
+      "goals": [
+        "Affect"
+      ],
+      "approaches": [
+        "EAP0003"
+      ],
+      "attack_tactics": [
+        "Collection"
+      ]
     },
     "EAC0018": {
       "id": "EAC0018",
       "name": "Security Controls",
-      "tactic": "Protect",
-      "description": "Deploy or modify security controls in response to adversary activity.",
-      "implementation": {
-        "action_type": "deploy_security_control",
-        "parameters": ["control_type", "target", "configuration", "monitoring"]
-      }
+      "description": "Alter security controls to make the system more or less vulnerable to attack.",
+      "long_description": "Manipulating Security Controls involves making configuration changes to a system\u2019s security settings including modifying Group Policies, disabling/enabling autorun for removable media, tightening or relaxing system firewalls, etc. Such security controls can be tightened to dissuade or prevent adversary activity. Conversely, security controls can be weakened or left overly permissive to encourage or enable adversary activity.  Tightening security controls can typically be done by implementing any of the mitigations described in MITRE ATT&CK. See https://attack.mitre.org/mitigations/enterprise/ for a full list of mitigation strategies. While loosening security controls may seem obvious (i.e., simply don\u2019t employ a given mitigation strategy), there is an additional level of nuance that must be considered. Some security controls are considered so routine that its absence may be suspicious.  For example, completely turning off Windows Defender would likely raise the adversary\u2019s suspicion. However, it is possible to turn off Windows Defender in certain shared drives to encourage adversary activity in predetermined locations. Therefore, it will likely be far less suspicious to turn off Windows Defender in a single directory or share. When assessing the likelihood that removing a given security control is overly suspicious, it is important to consider how prevalent that security control is, the target adversary\u2019s sophistication, and the engagement narrative.",
+      "type": "Engagement",
+      "goals": [
+        "Affect"
+      ],
+      "approaches": [
+        "EAP0003",
+        "EAP0004"
+      ],
+      "attack_tactics": [
+        "Collection",
+        "Command and Control",
+        "Exfiltration",
+        "Defense Evasion",
+        "Execution",
+        "Privilege Escalation",
+        "Lateral Movement",
+        "Initial Access",
+        "Persistence",
+        "Credential Access",
+        "Discovery",
+        "Impact"
+      ]
     },
     "EAC0019": {
       "id": "EAC0019",
-      "name": "Persona Creation",
-      "tactic": "Prepare",
-      "description": "Create fake personas that can interact with adversaries.",
-      "implementation": {
-        "action_type": "create_persona",
-        "parameters": ["persona_type", "identity_details", "communication_channels", "backstory"]
-      }
+      "name": "Baseline",
+      "description": "Identify key system elements to establish a baseline and be prepared to reset a system to that baseline when necessary.",
+      "long_description": "To determine the system Baseline, the defender must identify software and configuration elements that are critical to a set of objectives. The defender must define the proper values and be prepared to reset a running system to its intended state. Reverting to a Baseline configuration can be essential when restoring an operational environment to a safe state or when looking to impose a cost on adversaries by preventing their activity.  For example, the defender can watch for an adversary to make changes in the environment and then revert the environment with the goal of either forcing the adversary to target elsewhere in the network or to display a new, possibly more advanced, TTP. The Baseline values will also be crucial post-operation when analyzing changes to the environment over time.",
+      "type": "Engagement",
+      "goals": [
+        "Affect"
+      ],
+      "approaches": [
+        "EAP0003"
+      ],
+      "attack_tactics": [
+        "Defense Evasion",
+        "Persistence",
+        "Privilege Escalation",
+        "Impact"
+      ]
     },
     "EAC0020": {
       "id": "EAC0020",
+      "name": "Isolation",
+      "description": "Configure devices, systems, networks, etc. to contain activity and data, thus preventing the expansion of an engagement beyond desired limits.",
+      "long_description": "Using Isolation, a defender can limit the effectiveness and scope of malicious activity and/or lower exposure to unintended risks. When a system or resource is isolated, a defender can observe adversary behaviors or tools with limited, or no, lateral movement allowed. For example, a defender may detonate a piece of malware on an isolated system to perform dynamic analysis without risk to other network resources.  Determining which systems should be isolated in an operation is a critical decision when calculating acceptable operational risk. However, if the adversary expects to find an entire corporate network but instead finds only an isolated system, they may not be interested in engaging with the target. Balancing acceptable risk, believability, and operational objectives is essential when determining if or when a system should be isolated.",
+      "type": "Engagement",
+      "goals": [
+        "Affect"
+      ],
+      "approaches": [
+        "EAP0003",
+        "EAP0005"
+      ],
+      "attack_tactics": [
+        "Lateral Movement",
+        "Initial Access",
+        "Command and Control",
+        "Execution"
+      ]
+    },
+    "EAC0021": {
+      "id": "EAC0021",
+      "name": "Attack Vector Migration",
+      "description": "Move a malicious link, file, or device from its intended location to an engagement system or network for execution/use.",
+      "long_description": "When a defender Migrates an Attack Vector, the defender intercepts a malicious element and moves it to a safe environment, such as a decoy system within a decoy network, for continued engagement or analysis. A defender may choose to Attack Vector Migrations, which may appear in the form of phishing emails, suspicious email attachments, or malicious USBs. For example, a defender might move a suspicious attachment from a corporate inbox to an inbox on a system that, while in the corporate IP space, is completely segmented from the enterprise network. This segregated environment will allow the adversary to move laterally throughout the environment without risk to enterprise resources.  Determining when an engagement should be moved to an engagement environment is a critical decision when calculating acceptable operational risk. However, if the adversary sent a custom malware sample to a phishing victim, but ultimately find themselves on an unrelated victim, they may be suspicious. Balancing this acceptable risk, believability, and operational goals is essential when determining if or when to migrate an attack vector.",
+      "type": "Engagement",
+      "goals": [
+        "Affect"
+      ],
+      "approaches": [
+        "EAP0004"
+      ],
+      "attack_tactics": [
+        "Lateral Movement",
+        "Initial Access",
+        "Command and Control",
+        "Execution",
+        "Persistence"
+      ]
+    },
+    "EAC0022": {
+      "id": "EAC0022",
       "name": "Artifact Diversity",
-      "tactic": "Prepare",
-      "description": "Use diverse artifacts to increase adversary uncertainty.",
-      "implementation": {
-        "action_type": "deploy_artifact_diversity",
-        "parameters": ["artifact_types", "distribution", "variation_rules"]
-      }
+      "description": "Present the adversary with a variety of network and system artifacts.",
+      "long_description": "Artifact Diversity means presenting multiple network and system artifacts to the adversary including accounts, files/directories, credentials, logs, web browsing history, browser cookies, etc. These artifacts can be legitimate artifacts created as the result of natural usage over time or manually added to the environment by the defender. Artifact Diversity can be used to encourage the adversary to engage by offering a broad attack surface or can increase the adversary\u2019s overall comfort level by adding to the believability of the environment.  Additionally, these artifacts may be Lures intended to elicit a specific response from the adversary. In any case, by monitoring adversary activity in a diverse environment, the defender can gain information on the adversary\u2019s capabilities and targeting preferences. For example, a defender can include a diverse set of accounts and credentials and then monitor to determine which accounts the adversary targets in the future.",
+      "type": "Engagement",
+      "goals": [
+        "Elicit"
+      ],
+      "approaches": [
+        "EAP0006",
+        "EAP0007"
+      ],
+      "attack_tactics": [
+        "Discovery",
+        "Execution",
+        "Defense Evasion",
+        "Persistence",
+        "Privilege Escalation",
+        "Initial Access",
+        "Impact",
+        "Credential Access",
+        "Reconnaissance",
+        "Collection"
+      ]
+    },
+    "EAC0023": {
+      "id": "EAC0023",
+      "name": "Introduced Vulnerabilities",
+      "description": "Intentionally introduce vulnerabilities into the environment for the adversary to exploit.",
+      "long_description": "By intentionally Introducing Vulnerabilities into the engagement environment, the defender can attempt to motivate the adversary to target specific resources. This targeting may serve to move the adversary towards a particular resource, or away from another resource. At other times, the defender may Introduce Vulnerabilities as a mean of encouraging the adversary to reveal targeting preferences, available capabilities, or even to influence future targeting decisions. The operational objectives will drive how and why the defender Introduces Vulnerabilities in the engagement environment.",
+      "type": "Engagement",
+      "goals": [
+        "Expose",
+        "Affect",
+        "Elicit"
+      ],
+      "approaches": [
+        "EAP0002",
+        "EAP0004",
+        "EAP0007"
+      ],
+      "attack_tactics": [
+        "Privilege Escalation",
+        "Credential Access",
+        "Discovery",
+        "Execution",
+        "Lateral Movement"
+      ]
+    },
+    "SAC0001": {
+      "id": "SAC0001",
+      "name": "Operational Objective",
+      "description": "Define the objective of the desired end-state of your adversary engagement operations.",
+      "long_description": "The Operational Objective is  the goal(s) that drive all of the approaches and activities used in an adversary engagement operation. Articulating the operational objective allows the defender to align their actions to reach the desired end-state. There are three high-level Engagement Goals in adversary engagement operations: to Expose adversaries on the network, to Affect adversaries on the network, or to Elicit new information about adversaries.  These larger themes should help the defender create more focused operational objectives. For example, realistic operational objectives include: protecting a specific high-value technology or person by exposing adversaries targeting that technology or person, protecting against insider threats by affecting the adversary\u2019s ability to steal sensitive data, or increasing the defender\u2019s understanding of the threat landscape by eliciting new adversary TTPs, etc. Every action taken in the planning, execution, and analysis of an operation should be aligned with the operational objective. It is important to define this objective early on. Input from any involved stakeholders should be considered when choosing the operational objectives.  ",
+      "type": "Strategic",
+      "goals": [
+        "Prepare"
+      ],
+      "approaches": [
+        "SAP0001"
+      ],
+      "attack_tactics": []
+    },
+    "SAC0002": {
+      "id": "SAC0002",
+      "name": "Persona Creation",
+      "description": "Plan and create a fictitious human user through a combination of planted data and revealed behavior patterns.",
+      "long_description": "Persona Creation is the process of planning for and creating the personas required to support the engagement narrative. This process should be informed by the previously generated threat model for the defender\u2019s target adversary. For example, if the adversary targets a specific industry, the persona might be created to look like someone who works in that industry. The persona outline should include basic information about the persona itself such as their name, their relationship to the environment, and geographic location. Often, and especially for a short-term engagement operation, these persona traits can be broad.  For example, it is unlikely that a persona used in a short-term ransomware detonation operation would require a lot of details to be effective. However, for a longer-term insider threat protection operation, the defender may need to create a persona with the online presence of a corporate employee, including name, birthday, address, etc. Many factors should be considered when determining how in-depth a persona should be, including adversary sophistication, defender resources, and engagement narrative.  Once the persona traits have been decided, the planning process should determine how these traits will manifest in the environment. Persona creation is important to running an operation, as personas are often the predominant means through which the defender can engage with the adversary or change the environment during the operation. Careful planning is important as personas can be resource intensive to create and maintain and can reveal the ruse if discovered as fake by the adversary. ",
+      "type": "Strategic",
+      "goals": [
+        "Prepare"
+      ],
+      "approaches": [
+        "SAP0001"
+      ],
+      "attack_tactics": []
+    },
+    "SAC0003": {
+      "id": "SAC0003",
+      "name": "Storyboarding",
+      "description": "Plan and create the deception story.",
+      "long_description": "Storyboarding is the process of creating the deception story through a sequence of events, interactions, the persona\u2019s pattern of life, etc. A large part of Storyboarding is creating this pattern of life for the persona(s) using the system(s). The pattern of life can include behaviors such as using email or chat software, browsing the Internet, using system software, or physically moving the device (particularly important for mobile devices and laptops).  The defender must determine how the Persona\u2019s behavior and other events in the environment will be generated. Personas may be generated automatically with tooling, manually with human operators, or some combination of both. The availability of defender resources may greatly impact the frequency of manually executing behaviors.  Not every action taken in the environment needs to be planned in advance. However, the defender should have a general idea of what actions will be taken. Setting up a storyboard early in the planning process will allow the operation to run smoothly, efficiently, and most importantly, consistently, regardless of operator, so as not to reveal the ruse.",
+      "type": "Strategic",
+      "goals": [
+        "Prepare"
+      ],
+      "approaches": [
+        "SAP0001"
+      ],
+      "attack_tactics": []
+    },
+    "SAC0004": {
+      "id": "SAC0004",
+      "name": "Cyber Threat Intelligence",
+      "description": "The process of analyzing actionable knowledge about adversaries and their malicious activities, enabling defenders and their organizations to reduce harm through better security decision-making",
+      "long_description": "Cyber Threat Intelligence (CTI) allows an organization to understand the threat landscape. CTI data can be informed by a combination of open and closed source research. Additionally, it can be supplemented with internal and external threat intelligence feeds, including information gleaned from previous engagement operations.  The understanding gained through CTI data allows the defender to identify and understand the target adversary for a given operation. For example, if the defender\u2019s intended operational outcome is to expose adversaries on the network, the defender should prioritize adversaries that historically target their organization or similar organizations and/or have displayed TTPs that are likely to evade current defenses. Additionally, storyboarding should look at CTI data for the target adversary to make informed estimations on what the adversary may do in the environment and how they might react to what they find.  Once one or more adversaries have been selected as the target adversary, the relevant CTI data should guide the creation of the engagement environment and storyboard including hardware and software requirements, the required level of realism for lures and pocket Litter, and acceptable operational risk. This definition was based on the work presented by MITRE ATT&CK as seen here.",
+      "type": "Strategic",
+      "goals": [
+        "Prepare",
+        "Understand"
+      ],
+      "approaches": [
+        "SAP0001",
+        "SAP0002"
+      ],
+      "attack_tactics": []
+    },
+    "SAC0005": {
+      "id": "SAC0005",
+      "name": "Gating Criteria",
+      "description": "Define the set of events that would lead to the unnegotiable pause or conclusion to the operation.",
+      "long_description": "Gating Criteria are the event or sequence of events that are agreed to be the unnegotiable immediate pause or end to the operation. Sometimes, these events include the successful completion of the agreed upon operational objectives. Other times, these events may signify the operation has reached a hard stop. This stop is often necessary because future operational safety cannot be guaranteed. Alternatively, the operation may need to end because events have occurred that outweigh the agreed upon acceptable risk. Finally, it may just be that if the adversary operates any longer, they may learn something the defender doesn\u2019t want them to know.  Multiple parties from the technical operations, threat intel, legal, and management perspectives should be included when defining Gating Criteria. For example, if an adversary begins to use the engagement environment as a platform to operate against other targets, stakeholders may decide that the operation must be suspended until the unacceptable traffic can be blocked. Defining the operational Gating Criteria is an essential step to ensure operational safety.",
+      "type": "Strategic",
+      "goals": [
+        "Prepare"
+      ],
+      "approaches": [
+        "SAP0001"
+      ],
+      "attack_tactics": []
+    },
+    "SAC0006": {
+      "id": "SAC0006",
+      "name": "After-Action Review",
+      "description": "Review of operational activities.",
+      "long_description": "The After Action Review (AAR) is the opportunity for the team to review the events of the operation to ensure progress towards strategic outcomes. This retrospective can include a review of the entire operational process from planning, implementation, execution, and impact. In addition to the operation itself, the AAR is an important time to assess the communication and teamwork of the operations team and all contributing stakeholders. While an AAR should always occur at the end of an operation, periodic reviews during long-running operations are vital to ensure alignment and progress towards the operational objectives.",
+      "type": "Strategic",
+      "goals": [
+        "Understand"
+      ],
+      "approaches": [
+        "SAP0002"
+      ],
+      "attack_tactics": []
+    },
+    "SAC0012": {
+      "id": "SAC0012",
+      "name": "Engagement Environment",
+      "description": "Design the systems and network for the operation.",
+      "long_description": "The Engagement Environment is the set of carefully tailored, highly instrumented systems designed on an engagement-by-engagement basis as the backdrop to the engagement narrative. It is the actual environment that the adversary will operate in. It is important to ensure that the Engagement Environment complements, rather than competes with, the engagement narrative. Additionally, these systems should provide conduits to allow the target adversary necessary movement throughout the environment, as needed to meet operational outcomes. <br><br>While not strictly part of the Engagement Environment, the collection system is the set of systems used to gather artifacts and other data from an operation to monitor the engagement to ensure operational safety. It is important to consider the collection system while designing the engagement environment. By designing these environments in lockstep, the defender guarantees that all aspects of the engagement environment can be monitored. This is essential to ensure operations remain within the guardrails set by the Rules of Engagement. For example, available resources, capabilities, or skills may limit the type of assets in, or size of, the engagement environment.",
+      "type": "Strategic",
+      "goals": [
+        "Prepare"
+      ],
+      "approaches": [
+        "SAP0001"
+      ],
+      "attack_tactics": []
+    },
+    "SAC0009": {
+      "id": "SAC0009",
+      "name": "Threat Model",
+      "description": "A risk assessment that models organizational strengths and weaknesses \u00a0\u00a0",
+      "long_description": "Among other things, threat models require that the defender assesses the strengths, weaknesses, and importance of the their own organization, including trusted partners, infrastructure, and critical cyber assets. This understanding will inform operational objectives by outlining the defender\u2019s attack surface and highlighting areas that may be of particular interest to a given adversary. The organization\u2019s threat model should be understood at the onset of an operation to drive operational objective development and revisited at the conclusion of an operation to ensure operational outcomes are captured. These process of defining and informing the organization\u2019s threat model should enable better security decision-making both in future operations and elsewhere in the organization.",
+      "type": "Strategic",
+      "goals": [
+        "Prepare",
+        "Understand"
+      ],
+      "approaches": [
+        "SAP0001",
+        "SAP0002"
+      ],
+      "attack_tactics": []
     }
   },
-  "attack_mappings": [
-    {"attack_id": "T1003", "attack_name": "OS Credential Dumping", "tactic": "Credential Access", "engage_activities": ["EAC0002", "EAC0005", "EAC0007", "EAC0011"]},
-    {"attack_id": "T1003.001", "attack_name": "LSASS Memory", "tactic": "Credential Access", "engage_activities": ["EAC0002", "EAC0007", "EAC0003"]},
-    {"attack_id": "T1005", "attack_name": "Data from Local System", "tactic": "Collection", "engage_activities": ["EAC0005", "EAC0008", "EAC0011", "EAC0015"]},
-    {"attack_id": "T1007", "attack_name": "System Service Discovery", "tactic": "Discovery", "engage_activities": ["EAC0005", "EAC0011", "EAC0015"]},
-    {"attack_id": "T1010", "attack_name": "Application Window Discovery", "tactic": "Discovery", "engage_activities": ["EAC0011", "EAC0015"]},
-    {"attack_id": "T1012", "attack_name": "Query Registry", "tactic": "Discovery", "engage_activities": ["EAC0011", "EAC0015", "EAC0005"]},
-    {"attack_id": "T1016", "attack_name": "System Network Configuration Discovery", "tactic": "Discovery", "engage_activities": ["EAC0009", "EAC0015", "EAC0005"]},
-    {"attack_id": "T1018", "attack_name": "Remote System Discovery", "tactic": "Discovery", "engage_activities": ["EAC0001", "EAC0009", "EAC0010", "EAC0005"]},
-    {"attack_id": "T1021", "attack_name": "Remote Services", "tactic": "Lateral Movement", "engage_activities": ["EAC0001", "EAC0006", "EAC0007", "EAC0010"]},
-    {"attack_id": "T1021.001", "attack_name": "Remote Desktop Protocol", "tactic": "Lateral Movement", "engage_activities": ["EAC0001", "EAC0007", "EAC0010"]},
-    {"attack_id": "T1021.002", "attack_name": "SMB/Windows Admin Shares", "tactic": "Lateral Movement", "engage_activities": ["EAC0001", "EAC0007", "EAC0008"]},
-    {"attack_id": "T1027", "attack_name": "Obfuscated Files or Information", "tactic": "Defense Evasion", "engage_activities": ["EAC0003", "EAC0004"]},
-    {"attack_id": "T1033", "attack_name": "System Owner/User Discovery", "tactic": "Discovery", "engage_activities": ["EAC0006", "EAC0011", "EAC0015"]},
-    {"attack_id": "T1039", "attack_name": "Data from Network Shared Drive", "tactic": "Collection", "engage_activities": ["EAC0001", "EAC0002", "EAC0008", "EAC0005"]},
-    {"attack_id": "T1040", "attack_name": "Network Sniffing", "tactic": "Credential Access", "engage_activities": ["EAC0004", "EAC0016", "EAC0007"]},
-    {"attack_id": "T1046", "attack_name": "Network Service Discovery", "tactic": "Discovery", "engage_activities": ["EAC0001", "EAC0009", "EAC0010", "EAC0005"]},
-    {"attack_id": "T1047", "attack_name": "Windows Management Instrumentation", "tactic": "Execution", "engage_activities": ["EAC0003", "EAC0010", "EAC0017"]},
-    {"attack_id": "T1048", "attack_name": "Exfiltration Over Alternative Protocol", "tactic": "Exfiltration", "engage_activities": ["EAC0004", "EAC0016", "EAC0008"]},
-    {"attack_id": "T1049", "attack_name": "System Network Connections Discovery", "tactic": "Discovery", "engage_activities": ["EAC0009", "EAC0015", "EAC0005"]},
-    {"attack_id": "T1053", "attack_name": "Scheduled Task/Job", "tactic": "Execution", "engage_activities": ["EAC0003", "EAC0011", "EAC0017"]},
-    {"attack_id": "T1055", "attack_name": "Process Injection", "tactic": "Defense Evasion", "engage_activities": ["EAC0003", "EAC0017"]},
-    {"attack_id": "T1057", "attack_name": "Process Discovery", "tactic": "Discovery", "engage_activities": ["EAC0011", "EAC0015", "EAC0017"]},
-    {"attack_id": "T1059", "attack_name": "Command and Scripting Interpreter", "tactic": "Execution", "engage_activities": ["EAC0003", "EAC0017"]},
-    {"attack_id": "T1068", "attack_name": "Exploitation for Privilege Escalation", "tactic": "Privilege Escalation", "engage_activities": ["EAC0001", "EAC0010", "EAC0017"]},
-    {"attack_id": "T1069", "attack_name": "Permission Groups Discovery", "tactic": "Discovery", "engage_activities": ["EAC0006", "EAC0011", "EAC0015"]},
-    {"attack_id": "T1070", "attack_name": "Indicator Removal", "tactic": "Defense Evasion", "engage_activities": ["EAC0003", "EAC0004"]},
-    {"attack_id": "T1071", "attack_name": "Application Layer Protocol", "tactic": "Command and Control", "engage_activities": ["EAC0004", "EAC0016"]},
-    {"attack_id": "T1074", "attack_name": "Data Staged", "tactic": "Collection", "engage_activities": ["EAC0003", "EAC0008", "EAC0005"]},
-    {"attack_id": "T1078", "attack_name": "Valid Accounts", "tactic": "Defense Evasion", "engage_activities": ["EAC0006", "EAC0007", "EAC0002"]},
-    {"attack_id": "T1082", "attack_name": "System Information Discovery", "tactic": "Discovery", "engage_activities": ["EAC0011", "EAC0015"]},
-    {"attack_id": "T1083", "attack_name": "File and Directory Discovery", "tactic": "Discovery", "engage_activities": ["EAC0005", "EAC0008", "EAC0011"]},
-    {"attack_id": "T1087", "attack_name": "Account Discovery", "tactic": "Discovery", "engage_activities": ["EAC0006", "EAC0011", "EAC0015"]},
-    {"attack_id": "T1098", "attack_name": "Account Manipulation", "tactic": "Persistence", "engage_activities": ["EAC0006", "EAC0003"]},
-    {"attack_id": "T1105", "attack_name": "Ingress Tool Transfer", "tactic": "Command and Control", "engage_activities": ["EAC0004", "EAC0016", "EAC0008"]},
-    {"attack_id": "T1110", "attack_name": "Brute Force", "tactic": "Credential Access", "engage_activities": ["EAC0006", "EAC0007", "EAC0016"]},
-    {"attack_id": "T1111", "attack_name": "Multi-Factor Authentication Interception", "tactic": "Credential Access", "engage_activities": ["EAC0007", "EAC0003"]},
-    {"attack_id": "T1112", "attack_name": "Modify Registry", "tactic": "Defense Evasion", "engage_activities": ["EAC0003", "EAC0011"]},
-    {"attack_id": "T1113", "attack_name": "Screen Capture", "tactic": "Collection", "engage_activities": ["EAC0008", "EAC0011", "EAC0015"]},
-    {"attack_id": "T1119", "attack_name": "Automated Collection", "tactic": "Collection", "engage_activities": ["EAC0005", "EAC0008", "EAC0002"]},
-    {"attack_id": "T1133", "attack_name": "External Remote Services", "tactic": "Persistence", "engage_activities": ["EAC0001", "EAC0007", "EAC0010"]},
-    {"attack_id": "T1135", "attack_name": "Network Share Discovery", "tactic": "Discovery", "engage_activities": ["EAC0001", "EAC0008", "EAC0005", "EAC0009"]},
-    {"attack_id": "T1136", "attack_name": "Create Account", "tactic": "Persistence", "engage_activities": ["EAC0006", "EAC0003"]},
-    {"attack_id": "T1140", "attack_name": "Deobfuscate/Decode Files or Information", "tactic": "Defense Evasion", "engage_activities": ["EAC0003", "EAC0008"]},
-    {"attack_id": "T1187", "attack_name": "Forced Authentication", "tactic": "Credential Access", "engage_activities": ["EAC0005", "EAC0007", "EAC0016"]},
-    {"attack_id": "T1190", "attack_name": "Exploit Public-Facing Application", "tactic": "Initial Access", "engage_activities": ["EAC0001", "EAC0010", "EAC0017"]},
-    {"attack_id": "T1195", "attack_name": "Supply Chain Compromise", "tactic": "Initial Access", "engage_activities": ["EAC0003", "EAC0018"]},
-    {"attack_id": "T1199", "attack_name": "Trusted Relationship", "tactic": "Initial Access", "engage_activities": ["EAC0006", "EAC0019"]},
-    {"attack_id": "T1200", "attack_name": "Hardware Additions", "tactic": "Initial Access", "engage_activities": ["EAC0003", "EAC0004"]},
-    {"attack_id": "T1210", "attack_name": "Exploitation of Remote Services", "tactic": "Lateral Movement", "engage_activities": ["EAC0001", "EAC0010", "EAC0017"]},
-    {"attack_id": "T1213", "attack_name": "Data from Information Repositories", "tactic": "Collection", "engage_activities": ["EAC0001", "EAC0008", "EAC0002", "EAC0005"]},
-    {"attack_id": "T1482", "attack_name": "Domain Trust Discovery", "tactic": "Discovery", "engage_activities": ["EAC0009", "EAC0015", "EAC0006"]},
-    {"attack_id": "T1486", "attack_name": "Data Encrypted for Impact", "tactic": "Impact", "engage_activities": ["EAC0008", "EAC0013"]},
-    {"attack_id": "T1489", "attack_name": "Service Stop", "tactic": "Impact", "engage_activities": ["EAC0010", "EAC0003"]},
-    {"attack_id": "T1490", "attack_name": "Inhibit System Recovery", "tactic": "Impact", "engage_activities": ["EAC0003", "EAC0013"]},
-    {"attack_id": "T1495", "attack_name": "Firmware Corruption", "tactic": "Impact", "engage_activities": ["EAC0010", "EAC0003"]},
-    {"attack_id": "T1498", "attack_name": "Network Denial of Service", "tactic": "Impact", "engage_activities": ["EAC0004", "EAC0016"]},
-    {"attack_id": "T1505", "attack_name": "Server Software Component", "tactic": "Persistence", "engage_activities": ["EAC0001", "EAC0010", "EAC0003"]},
-    {"attack_id": "T1518", "attack_name": "Software Discovery", "tactic": "Discovery", "engage_activities": ["EAC0011", "EAC0015", "EAC0017"]},
-    {"attack_id": "T1530", "attack_name": "Data from Cloud Storage", "tactic": "Collection", "engage_activities": ["EAC0002", "EAC0008", "EAC0005"]},
-    {"attack_id": "T1531", "attack_name": "Account Access Removal", "tactic": "Impact", "engage_activities": ["EAC0006", "EAC0003"]},
-    {"attack_id": "T1534", "attack_name": "Internal Spearphishing", "tactic": "Lateral Movement", "engage_activities": ["EAC0019", "EAC0005", "EAC0008"]},
-    {"attack_id": "T1539", "attack_name": "Steal Web Session Cookie", "tactic": "Credential Access", "engage_activities": ["EAC0002", "EAC0007"]},
-    {"attack_id": "T1543", "attack_name": "Create or Modify System Process", "tactic": "Persistence", "engage_activities": ["EAC0003", "EAC0017"]},
-    {"attack_id": "T1546", "attack_name": "Event Triggered Execution", "tactic": "Persistence", "engage_activities": ["EAC0003", "EAC0011"]},
-    {"attack_id": "T1547", "attack_name": "Boot or Logon Autostart Execution", "tactic": "Persistence", "engage_activities": ["EAC0003", "EAC0011"]},
-    {"attack_id": "T1550", "attack_name": "Use Alternate Authentication Material", "tactic": "Defense Evasion", "engage_activities": ["EAC0007", "EAC0002", "EAC0006"]},
-    {"attack_id": "T1552", "attack_name": "Unsecured Credentials", "tactic": "Credential Access", "engage_activities": ["EAC0002", "EAC0005", "EAC0007", "EAC0011"]},
-    {"attack_id": "T1555", "attack_name": "Credentials from Password Stores", "tactic": "Credential Access", "engage_activities": ["EAC0002", "EAC0007", "EAC0005"]},
-    {"attack_id": "T1556", "attack_name": "Modify Authentication Process", "tactic": "Credential Access", "engage_activities": ["EAC0003", "EAC0007"]},
-    {"attack_id": "T1557", "attack_name": "Adversary-in-the-Middle", "tactic": "Credential Access", "engage_activities": ["EAC0004", "EAC0016", "EAC0007"]},
-    {"attack_id": "T1558", "attack_name": "Steal or Forge Kerberos Tickets", "tactic": "Credential Access", "engage_activities": ["EAC0007", "EAC0002", "EAC0006"]},
-    {"attack_id": "T1560", "attack_name": "Archive Collected Data", "tactic": "Collection", "engage_activities": ["EAC0003", "EAC0008"]},
-    {"attack_id": "T1562", "attack_name": "Impair Defenses", "tactic": "Defense Evasion", "engage_activities": ["EAC0003", "EAC0018"]},
-    {"attack_id": "T1563", "attack_name": "Remote Service Session Hijacking", "tactic": "Lateral Movement", "engage_activities": ["EAC0001", "EAC0007", "EAC0010"]},
-    {"attack_id": "T1566", "attack_name": "Phishing", "tactic": "Initial Access", "engage_activities": ["EAC0002", "EAC0005", "EAC0007", "EAC0019"]},
-    {"attack_id": "T1567", "attack_name": "Exfiltration Over Web Service", "tactic": "Exfiltration", "engage_activities": ["EAC0004", "EAC0008", "EAC0016"]},
-    {"attack_id": "T1570", "attack_name": "Lateral Tool Transfer", "tactic": "Lateral Movement", "engage_activities": ["EAC0001", "EAC0008", "EAC0004"]},
-    {"attack_id": "T1571", "attack_name": "Non-Standard Port", "tactic": "Command and Control", "engage_activities": ["EAC0004", "EAC0016"]},
-    {"attack_id": "T1572", "attack_name": "Protocol Tunneling", "tactic": "Command and Control", "engage_activities": ["EAC0004", "EAC0016"]},
-    {"attack_id": "T1574", "attack_name": "Hijack Execution Flow", "tactic": "Persistence", "engage_activities": ["EAC0003", "EAC0017"]},
-    {"attack_id": "T1580", "attack_name": "Cloud Infrastructure Discovery", "tactic": "Discovery", "engage_activities": ["EAC0001", "EAC0009", "EAC0015"]},
-    {"attack_id": "T1583", "attack_name": "Acquire Infrastructure", "tactic": "Resource Development", "engage_activities": ["EAC0004", "EAC0019"]},
-    {"attack_id": "T1586", "attack_name": "Compromise Accounts", "tactic": "Resource Development", "engage_activities": ["EAC0006", "EAC0019"]},
-    {"attack_id": "T1589", "attack_name": "Gather Victim Identity Information", "tactic": "Reconnaissance", "engage_activities": ["EAC0019", "EAC0015", "EAC0006"]},
-    {"attack_id": "T1590", "attack_name": "Gather Victim Network Information", "tactic": "Reconnaissance", "engage_activities": ["EAC0009", "EAC0015", "EAC0001"]},
-    {"attack_id": "T1591", "attack_name": "Gather Victim Org Information", "tactic": "Reconnaissance", "engage_activities": ["EAC0015", "EAC0019", "EAC0011"]},
-    {"attack_id": "T1592", "attack_name": "Gather Victim Host Information", "tactic": "Reconnaissance", "engage_activities": ["EAC0010", "EAC0015", "EAC0011"]},
-    {"attack_id": "T1595", "attack_name": "Active Scanning", "tactic": "Reconnaissance", "engage_activities": ["EAC0001", "EAC0009", "EAC0010", "EAC0004"]}
-  ],
-  "threat_level_configurations": {
+  "attack_mappings": {
+    "T1001": {
+      "attack_id": "T1001",
+      "technique_name": "Data Obfuscation",
+      "tactics": [
+        "Command and Control"
+      ],
+      "engage_activities": [
+        "EAC0004",
+        "EAC0014",
+        "EAC0015"
+      ]
+    },
+    "T1003": {
+      "attack_id": "T1003",
+      "technique_name": "OS Credential Dumping",
+      "tactics": [
+        "Credential Access"
+      ],
+      "engage_activities": [
+        "EAC0003",
+        "EAC0005",
+        "EAC0011"
+      ]
+    },
+    "T1005": {
+      "attack_id": "T1005",
+      "technique_name": "Data from Local System",
+      "tactics": [
+        "Collection"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0008",
+        "EAC0011",
+        "EAC0014",
+        "EAC0015",
+        "EAC0018"
+      ]
+    },
+    "T1006": {
+      "attack_id": "T1006",
+      "technique_name": "Direct Volume Access",
+      "tactics": [
+        "Defense Evasion"
+      ],
+      "engage_activities": [
+        "EAC0014"
+      ]
+    },
+    "T1007": {
+      "attack_id": "T1007",
+      "technique_name": "System Service Discovery",
+      "tactics": [
+        "Discovery"
+      ],
+      "engage_activities": [
+        "EAC0001",
+        "EAC0005",
+        "EAC0011",
+        "EAC0014",
+        "EAC0015"
+      ]
+    },
+    "T1008": {
+      "attack_id": "T1008",
+      "technique_name": "Fallback Channels",
+      "tactics": [
+        "Command and Control"
+      ],
+      "engage_activities": [
+        "EAC0002",
+        "EAC0016",
+        "EAC0018"
+      ]
+    },
+    "T1010": {
+      "attack_id": "T1010",
+      "technique_name": "Application Window Discovery",
+      "tactics": [
+        "Discovery"
+      ],
+      "engage_activities": [
+        "EAC0006",
+        "EAC0011",
+        "EAC0015"
+      ]
+    },
+    "T1011": {
+      "attack_id": "T1011",
+      "technique_name": "Exfiltration Over Other Network Medium",
+      "tactics": [
+        "Exfiltration"
+      ],
+      "engage_activities": [
+        "EAC0002",
+        "EAC0004",
+        "EAC0005",
+        "EAC0015",
+        "EAC0016",
+        "EAC0018"
+      ]
+    },
+    "T1012": {
+      "attack_id": "T1012",
+      "technique_name": "Query Registry",
+      "tactics": [
+        "Discovery"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0008",
+        "EAC0011",
+        "EAC0014"
+      ]
+    },
+    "T1014": {
+      "attack_id": "T1014",
+      "technique_name": "Rootkit",
+      "tactics": [
+        "Defense Evasion"
+      ],
+      "engage_activities": [
+        "EAC0018",
+        "EAC0019"
+      ]
+    },
+    "T1016": {
+      "attack_id": "T1016",
+      "technique_name": "System Network Configuration Discovery",
+      "tactics": [
+        "Discovery"
+      ],
+      "engage_activities": [
+        "EAC0001",
+        "EAC0005",
+        "EAC0008",
+        "EAC0011",
+        "EAC0014",
+        "EAC0015"
+      ]
+    },
+    "T1018": {
+      "attack_id": "T1018",
+      "technique_name": "Remote System Discovery",
+      "tactics": [
+        "Discovery"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0007",
+        "EAC0011",
+        "EAC0014",
+        "EAC0016"
+      ]
+    },
+    "T1020": {
+      "attack_id": "T1020",
+      "technique_name": "Automated Exfiltration",
+      "tactics": [
+        "Exfiltration"
+      ],
+      "engage_activities": [
+        "EAC0002",
+        "EAC0004",
+        "EAC0005",
+        "EAC0011",
+        "EAC0015",
+        "EAC0016",
+        "EAC0018"
+      ]
+    },
+    "T1021": {
+      "attack_id": "T1021",
+      "technique_name": "Remote Services",
+      "tactics": [
+        "Lateral Movement"
+      ],
+      "engage_activities": [
+        "EAC0002",
+        "EAC0005",
+        "EAC0006",
+        "EAC0016"
+      ]
+    },
+    "T1025": {
+      "attack_id": "T1025",
+      "technique_name": "Data from Removable Media",
+      "tactics": [
+        "Collection"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0010",
+        "EAC0011",
+        "EAC0015"
+      ]
+    },
+    "T1027": {
+      "attack_id": "T1027",
+      "technique_name": "Obfuscated Files or Information",
+      "tactics": [
+        "Defense Evasion"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0013",
+        "EAC0014",
+        "EAC0015"
+      ]
+    },
+    "T1029": {
+      "attack_id": "T1029",
+      "technique_name": "Scheduled Transfer",
+      "tactics": [
+        "Exfiltration"
+      ],
+      "engage_activities": [
+        "EAC0002",
+        "EAC0004",
+        "EAC0005",
+        "EAC0015",
+        "EAC0016",
+        "EAC0018"
+      ]
+    },
+    "T1030": {
+      "attack_id": "T1030",
+      "technique_name": "Data Transfer Size Limits",
+      "tactics": [
+        "Exfiltration"
+      ],
+      "engage_activities": [
+        "EAC0002",
+        "EAC0005",
+        "EAC0015",
+        "EAC0016",
+        "EAC0018"
+      ]
+    },
+    "T1033": {
+      "attack_id": "T1033",
+      "technique_name": "System Owner/User Discovery",
+      "tactics": [
+        "Discovery"
+      ],
+      "engage_activities": [
+        "EAC0001",
+        "EAC0005",
+        "EAC0011",
+        "EAC0012",
+        "EAC0014"
+      ]
+    },
+    "T1036": {
+      "attack_id": "T1036",
+      "technique_name": "Masquerading",
+      "tactics": [
+        "Defense Evasion"
+      ],
+      "engage_activities": [
+        "EAC0003"
+      ]
+    },
+    "T1037": {
+      "attack_id": "T1037",
+      "technique_name": "Boot or Logon Initialization Scripts",
+      "tactics": [
+        "Persistence",
+        "Privilege Escalation"
+      ],
+      "engage_activities": [
+        "EAC0019"
+      ]
+    },
+    "T1039": {
+      "attack_id": "T1039",
+      "technique_name": "Data from Network Shared Drive",
+      "tactics": [
+        "Collection"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0011",
+        "EAC0015",
+        "EAC0016",
+        "EAC0018"
+      ]
+    },
+    "T1040": {
+      "attack_id": "T1040",
+      "technique_name": "Network Sniffing",
+      "tactics": [
+        "Credential Access",
+        "Discovery"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0007",
+        "EAC0011",
+        "EAC0014",
+        "EAC0016",
+        "EAC0023"
+      ]
+    },
+    "T1041": {
+      "attack_id": "T1041",
+      "technique_name": "Exfiltration Over C2 Channel",
+      "tactics": [
+        "Exfiltration"
+      ],
+      "engage_activities": [
+        "EAC0002",
+        "EAC0004",
+        "EAC0005",
+        "EAC0015",
+        "EAC0016",
+        "EAC0018"
+      ]
+    },
+    "T1046": {
+      "attack_id": "T1046",
+      "technique_name": "Network Service Scanning",
+      "tactics": [
+        "Discovery"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0007",
+        "EAC0011",
+        "EAC0014",
+        "EAC0016",
+        "EAC0023"
+      ]
+    },
+    "T1047": {
+      "attack_id": "T1047",
+      "technique_name": "Windows Management Instrumentation",
+      "tactics": [
+        "Execution"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0011",
+        "EAC0013",
+        "EAC0014",
+        "EAC0015",
+        "EAC0018"
+      ]
+    },
+    "T1048": {
+      "attack_id": "T1048",
+      "technique_name": "Exfiltration Over Alternative Protocol",
+      "tactics": [
+        "Exfiltration"
+      ],
+      "engage_activities": [
+        "EAC0002",
+        "EAC0004",
+        "EAC0005",
+        "EAC0015",
+        "EAC0016",
+        "EAC0018"
+      ]
+    },
+    "T1049": {
+      "attack_id": "T1049",
+      "technique_name": "System Network Connections Discovery",
+      "tactics": [
+        "Discovery"
+      ],
+      "engage_activities": [
+        "EAC0001",
+        "EAC0005",
+        "EAC0008",
+        "EAC0011",
+        "EAC0014",
+        "EAC0015"
+      ]
+    },
+    "T1052": {
+      "attack_id": "T1052",
+      "technique_name": "Exfiltration Over Physical Medium",
+      "tactics": [
+        "Exfiltration"
+      ],
+      "engage_activities": [
+        "EAC0002",
+        "EAC0004",
+        "EAC0005",
+        "EAC0010",
+        "EAC0015",
+        "EAC0016",
+        "EAC0018"
+      ]
+    },
+    "T1053": {
+      "attack_id": "T1053",
+      "technique_name": "Scheduled Task/Job",
+      "tactics": [
+        "Execution",
+        "Persistence",
+        "Privilege Escalation"
+      ],
+      "engage_activities": [
+        "EAC0003",
+        "EAC0005",
+        "EAC0014"
+      ]
+    },
+    "T1055": {
+      "attack_id": "T1055",
+      "technique_name": "Process Injection",
+      "tactics": [
+        "Defense Evasion",
+        "Privilege Escalation"
+      ],
+      "engage_activities": [
+        "EAC0018"
+      ]
+    },
+    "T1056": {
+      "attack_id": "T1056",
+      "technique_name": "Input Capture",
+      "tactics": [
+        "Collection",
+        "Credential Access"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0006",
+        "EAC0011"
+      ]
+    },
+    "T1057": {
+      "attack_id": "T1057",
+      "technique_name": "Process Discovery",
+      "tactics": [
+        "Discovery"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0008",
+        "EAC0011",
+        "EAC0014",
+        "EAC0022"
+      ]
+    },
+    "T1059": {
+      "attack_id": "T1059",
+      "technique_name": "Command and Scripting Interpreter",
+      "tactics": [
+        "Execution"
+      ],
+      "engage_activities": [
+        "EAC0014",
+        "EAC0018",
+        "EAC0022"
+      ]
+    },
+    "T1068": {
+      "attack_id": "T1068",
+      "technique_name": "Exploitation for Privilege Escalation",
+      "tactics": [
+        "Privilege Escalation"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0006",
+        "EAC0018",
+        "EAC0023"
+      ]
+    },
+    "T1069": {
+      "attack_id": "T1069",
+      "technique_name": "Permission Groups Discovery",
+      "tactics": [
+        "Discovery"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0011",
+        "EAC0012",
+        "EAC0014",
+        "EAC0022"
+      ]
+    },
+    "T1070": {
+      "attack_id": "T1070",
+      "technique_name": "Indicator Removal on Host",
+      "tactics": [
+        "Defense Evasion"
+      ],
+      "engage_activities": [
+        "EAC0001",
+        "EAC0003",
+        "EAC0018"
+      ]
+    },
+    "T1071": {
+      "attack_id": "T1071",
+      "technique_name": "Application Layer Protocol",
+      "tactics": [
+        "Command and Control"
+      ],
+      "engage_activities": [
+        "EAC0002",
+        "EAC0016"
+      ]
+    },
+    "T1072": {
+      "attack_id": "T1072",
+      "technique_name": "Software Deployment Tools",
+      "tactics": [
+        "Execution",
+        "Lateral Movement"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0006",
+        "EAC0014",
+        "EAC0018",
+        "EAC0023"
+      ]
+    },
+    "T1074": {
+      "attack_id": "T1074",
+      "technique_name": "Data Staged",
+      "tactics": [
+        "Collection"
+      ],
+      "engage_activities": [
+        "EAC0004",
+        "EAC0005"
+      ]
+    },
+    "T1078": {
+      "attack_id": "T1078",
+      "technique_name": "Valid Accounts",
+      "tactics": [
+        "Defense Evasion",
+        "Persistence",
+        "Privilege Escalation",
+        "Initial Access"
+      ],
+      "engage_activities": [
+        "EAC0003",
+        "EAC0005",
+        "EAC0008",
+        "EAC0011",
+        "EAC0012",
+        "EAC0022"
+      ]
+    },
+    "T1080": {
+      "attack_id": "T1080",
+      "technique_name": "Taint Shared Content",
+      "tactics": [
+        "Lateral Movement"
+      ],
+      "engage_activities": [
+        "EAC0003",
+        "EAC0005",
+        "EAC0015",
+        "EAC0016",
+        "EAC0018"
+      ]
+    },
+    "T1082": {
+      "attack_id": "T1082",
+      "technique_name": "System Information Discovery",
+      "tactics": [
+        "Discovery"
+      ],
+      "engage_activities": [
+        "EAC0001",
+        "EAC0008",
+        "EAC0011",
+        "EAC0014",
+        "EAC0015"
+      ]
+    },
+    "T1083": {
+      "attack_id": "T1083",
+      "technique_name": "File and Directory Discovery",
+      "tactics": [
+        "Discovery"
+      ],
+      "engage_activities": [
+        "EAC0001",
+        "EAC0005",
+        "EAC0011",
+        "EAC0012",
+        "EAC0014",
+        "EAC0015",
+        "EAC0022"
+      ]
+    },
+    "T1087": {
+      "attack_id": "T1087",
+      "technique_name": "Account Discovery",
+      "tactics": [
+        "Discovery"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0011",
+        "EAC0012",
+        "EAC0014",
+        "EAC0015",
+        "EAC0022"
+      ]
+    },
+    "T1090": {
+      "attack_id": "T1090",
+      "technique_name": "Proxy",
+      "tactics": [
+        "Command and Control"
+      ],
+      "engage_activities": [
+        "EAC0002",
+        "EAC0016"
+      ]
+    },
+    "T1091": {
+      "attack_id": "T1091",
+      "technique_name": "Replication Through Removable Media",
+      "tactics": [
+        "Lateral Movement",
+        "Initial Access"
+      ],
+      "engage_activities": [
+        "EAC0001",
+        "EAC0003",
+        "EAC0010",
+        "EAC0014",
+        "EAC0018",
+        "EAC0020",
+        "EAC0021"
+      ]
+    },
+    "T1092": {
+      "attack_id": "T1092",
+      "technique_name": "Communication Through Removable Media",
+      "tactics": [
+        "Command and Control"
+      ],
+      "engage_activities": [
+        "EAC0003",
+        "EAC0010",
+        "EAC0012",
+        "EAC0013",
+        "EAC0018",
+        "EAC0020",
+        "EAC0021"
+      ]
+    },
+    "T1095": {
+      "attack_id": "T1095",
+      "technique_name": "Non-Application Layer Protocol",
+      "tactics": [
+        "Command and Control"
+      ],
+      "engage_activities": [
+        "EAC0002",
+        "EAC0016"
+      ]
+    },
+    "T1098": {
+      "attack_id": "T1098",
+      "technique_name": "Account Manipulation",
+      "tactics": [
+        "Persistence"
+      ],
+      "engage_activities": [
+        "EAC0003",
+        "EAC0005",
+        "EAC0012",
+        "EAC0018"
+      ]
+    },
+    "T1102": {
+      "attack_id": "T1102",
+      "technique_name": "Web Service",
+      "tactics": [
+        "Command and Control"
+      ],
+      "engage_activities": [
+        "EAC0002",
+        "EAC0005",
+        "EAC0016"
+      ]
+    },
+    "T1104": {
+      "attack_id": "T1104",
+      "technique_name": "Multi-Stage Channels",
+      "tactics": [
+        "Command and Control"
+      ],
+      "engage_activities": [
+        "EAC0016",
+        "EAC0021"
+      ]
+    },
+    "T1105": {
+      "attack_id": "T1105",
+      "technique_name": "Ingress Tool Transfer",
+      "tactics": [
+        "Command and Control"
+      ],
+      "engage_activities": [
+        "EAC0002",
+        "EAC0016",
+        "EAC0020"
+      ]
+    },
+    "T1106": {
+      "attack_id": "T1106",
+      "technique_name": "Native API",
+      "tactics": [
+        "Execution"
+      ],
+      "engage_activities": [
+        "EAC0001",
+        "EAC0014"
+      ]
+    },
+    "T1110": {
+      "attack_id": "T1110",
+      "technique_name": "Brute Force",
+      "tactics": [
+        "Credential Access"
+      ],
+      "engage_activities": [
+        "EAC0003",
+        "EAC0005",
+        "EAC0014",
+        "EAC0018"
+      ]
+    },
+    "T1111": {
+      "attack_id": "T1111",
+      "technique_name": "Two-Factor Authentication Interception",
+      "tactics": [
+        "Credential Access"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0016",
+        "EAC0018"
+      ]
+    },
+    "T1112": {
+      "attack_id": "T1112",
+      "technique_name": "Modify Registry",
+      "tactics": [
+        "Defense Evasion"
+      ],
+      "engage_activities": [
+        "EAC0003",
+        "EAC0018",
+        "EAC0019"
+      ]
+    },
+    "T1113": {
+      "attack_id": "T1113",
+      "technique_name": "Screen Capture",
+      "tactics": [
+        "Collection"
+      ],
+      "engage_activities": [
+        "EAC0011",
+        "EAC0012",
+        "EAC0015",
+        "EAC0017"
+      ]
+    },
+    "T1114": {
+      "attack_id": "T1114",
+      "technique_name": "Email Collection",
+      "tactics": [
+        "Collection"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0008",
+        "EAC0009",
+        "EAC0011",
+        "EAC0015"
+      ]
+    },
+    "T1115": {
+      "attack_id": "T1115",
+      "technique_name": "Clipboard Data",
+      "tactics": [
+        "Collection"
+      ],
+      "engage_activities": [
+        "EAC0011",
+        "EAC0015"
+      ]
+    },
+    "T1119": {
+      "attack_id": "T1119",
+      "technique_name": "Automated Collection",
+      "tactics": [
+        "Collection"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0009",
+        "EAC0011",
+        "EAC0012",
+        "EAC0014",
+        "EAC0015",
+        "EAC0016"
+      ]
+    },
+    "T1120": {
+      "attack_id": "T1120",
+      "technique_name": "Peripheral Device Discovery",
+      "tactics": [
+        "Discovery"
+      ],
+      "engage_activities": [
+        "EAC0010",
+        "EAC0011",
+        "EAC0014",
+        "EAC0022"
+      ]
+    },
+    "T1123": {
+      "attack_id": "T1123",
+      "technique_name": "Audio Capture",
+      "tactics": [
+        "Collection"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0010",
+        "EAC0011",
+        "EAC0015",
+        "EAC0016",
+        "EAC0017"
+      ]
+    },
+    "T1124": {
+      "attack_id": "T1124",
+      "technique_name": "System Time Discovery",
+      "tactics": [
+        "Discovery"
+      ],
+      "engage_activities": [
+        "EAC0011",
+        "EAC0014",
+        "EAC0015"
+      ]
+    },
+    "T1125": {
+      "attack_id": "T1125",
+      "technique_name": "Video Capture",
+      "tactics": [
+        "Collection"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0010",
+        "EAC0011",
+        "EAC0012",
+        "EAC0015",
+        "EAC0016",
+        "EAC0017"
+      ]
+    },
+    "T1129": {
+      "attack_id": "T1129",
+      "technique_name": "Shared Modules",
+      "tactics": [
+        "Execution"
+      ],
+      "engage_activities": [
+        "EAC0014"
+      ]
+    },
+    "T1132": {
+      "attack_id": "T1132",
+      "technique_name": "Data Encoding",
+      "tactics": [
+        "Command and Control"
+      ],
+      "engage_activities": [
+        "EAC0001",
+        "EAC0002",
+        "EAC0004",
+        "EAC0005",
+        "EAC0015",
+        "EAC0016"
+      ]
+    },
+    "T1133": {
+      "attack_id": "T1133",
+      "technique_name": "External Remote Services",
+      "tactics": [
+        "Persistence",
+        "Initial Access"
+      ],
+      "engage_activities": [
+        "EAC0003",
+        "EAC0005",
+        "EAC0007",
+        "EAC0008",
+        "EAC0011"
+      ]
+    },
+    "T1134": {
+      "attack_id": "T1134",
+      "technique_name": "Access Token Manipulation",
+      "tactics": [
+        "Defense Evasion",
+        "Privilege Escalation"
+      ],
+      "engage_activities": [
+        "EAC0001",
+        "EAC0014",
+        "EAC0018"
+      ]
+    },
+    "T1135": {
+      "attack_id": "T1135",
+      "technique_name": "Network Share Discovery",
+      "tactics": [
+        "Discovery"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0007",
+        "EAC0010",
+        "EAC0011",
+        "EAC0014",
+        "EAC0015",
+        "EAC0016",
+        "EAC0018"
+      ]
+    },
+    "T1136": {
+      "attack_id": "T1136",
+      "technique_name": "Create Account",
+      "tactics": [
+        "Persistence"
+      ],
+      "engage_activities": [
+        "EAC0003",
+        "EAC0018",
+        "EAC0019"
+      ]
+    },
+    "T1137": {
+      "attack_id": "T1137",
+      "technique_name": "Office Application Startup",
+      "tactics": [
+        "Persistence"
+      ],
+      "engage_activities": [
+        "EAC0003",
+        "EAC0005",
+        "EAC0006",
+        "EAC0019"
+      ]
+    },
+    "T1140": {
+      "attack_id": "T1140",
+      "technique_name": "Deobfuscate/Decode Files or Information",
+      "tactics": [
+        "Defense Evasion"
+      ],
+      "engage_activities": [
+        "EAC0014"
+      ]
+    },
+    "T1176": {
+      "attack_id": "T1176",
+      "technique_name": "Browser Extensions",
+      "tactics": [
+        "Persistence"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0019",
+        "EAC0022"
+      ]
+    },
+    "T1185": {
+      "attack_id": "T1185",
+      "technique_name": "Man in the Browser",
+      "tactics": [
+        "Collection"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0008",
+        "EAC0011"
+      ]
+    },
+    "T1187": {
+      "attack_id": "T1187",
+      "technique_name": "Forced Authentication",
+      "tactics": [
+        "Credential Access"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0016",
+        "EAC0018"
+      ]
+    },
+    "T1189": {
+      "attack_id": "T1189",
+      "technique_name": "Drive-by Compromise",
+      "tactics": [
+        "Initial Access"
+      ],
+      "engage_activities": [
+        "EAC0005"
+      ]
+    },
+    "T1190": {
+      "attack_id": "T1190",
+      "technique_name": "Exploit Public-Facing Application",
+      "tactics": [
+        "Initial Access"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0006"
+      ]
+    },
+    "T1195": {
+      "attack_id": "T1195",
+      "technique_name": "Supply Chain Compromise",
+      "tactics": [
+        "Initial Access"
+      ],
+      "engage_activities": [
+        "EAC0020",
+        "EAC0021"
+      ]
+    },
+    "T1197": {
+      "attack_id": "T1197",
+      "technique_name": "BITS Jobs",
+      "tactics": [
+        "Defense Evasion",
+        "Persistence"
+      ],
+      "engage_activities": [
+        "EAC0014",
+        "EAC0018"
+      ]
+    },
+    "T1199": {
+      "attack_id": "T1199",
+      "technique_name": "Trusted Relationship",
+      "tactics": [
+        "Initial Access"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0012",
+        "EAC0018"
+      ]
+    },
+    "T1200": {
+      "attack_id": "T1200",
+      "technique_name": "Hardware Additions",
+      "tactics": [
+        "Initial Access"
+      ],
+      "engage_activities": [
+        "EAC0016",
+        "EAC0018",
+        "EAC0020"
+      ]
+    },
+    "T1201": {
+      "attack_id": "T1201",
+      "technique_name": "Password Policy Discovery",
+      "tactics": [
+        "Discovery"
+      ],
+      "engage_activities": [
+        "EAC0014",
+        "EAC0015"
+      ]
+    },
+    "T1202": {
+      "attack_id": "T1202",
+      "technique_name": "Indirect Command Execution",
+      "tactics": [
+        "Defense Evasion"
+      ],
+      "engage_activities": [
+        "EAC0001",
+        "EAC0014"
+      ]
+    },
+    "T1203": {
+      "attack_id": "T1203",
+      "technique_name": "Exploitation for Client Execution",
+      "tactics": [
+        "Execution"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0006",
+        "EAC0018"
+      ]
+    },
+    "T1204": {
+      "attack_id": "T1204",
+      "technique_name": "User Execution",
+      "tactics": [
+        "Execution"
+      ],
+      "engage_activities": [
+        "EAC0012",
+        "EAC0013",
+        "EAC0015",
+        "EAC0020",
+        "EAC0021"
+      ]
+    },
+    "T1205": {
+      "attack_id": "T1205",
+      "technique_name": "Traffic Signaling",
+      "tactics": [
+        "Defense Evasion",
+        "Persistence",
+        "Command and Control"
+      ],
+      "engage_activities": [
+        "EAC0002",
+        "EAC0016"
+      ]
+    },
+    "T1207": {
+      "attack_id": "T1207",
+      "technique_name": "Rogue Domain Controller",
+      "tactics": [
+        "Defense Evasion"
+      ],
+      "engage_activities": [
+        "EAC0003",
+        "EAC0018"
+      ]
+    },
+    "T1210": {
+      "attack_id": "T1210",
+      "technique_name": "Exploitation of Remote Services",
+      "tactics": [
+        "Lateral Movement"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0006",
+        "EAC0018"
+      ]
+    },
+    "T1211": {
+      "attack_id": "T1211",
+      "technique_name": "Exploitation for Defense Evasion",
+      "tactics": [
+        "Defense Evasion"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0006",
+        "EAC0018"
+      ]
+    },
+    "T1212": {
+      "attack_id": "T1212",
+      "technique_name": "Exploitation for Credential Access",
+      "tactics": [
+        "Credential Access"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0006",
+        "EAC0012",
+        "EAC0018"
+      ]
+    },
+    "T1213": {
+      "attack_id": "T1213",
+      "technique_name": "Data from Information Repositories",
+      "tactics": [
+        "Collection"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0011",
+        "EAC0015",
+        "EAC0018"
+      ]
+    },
+    "T1216": {
+      "attack_id": "T1216",
+      "technique_name": "Signed Script Proxy Execution",
+      "tactics": [
+        "Defense Evasion"
+      ],
+      "engage_activities": [
+        "EAC0001",
+        "EAC0013",
+        "EAC0014"
+      ]
+    },
+    "T1217": {
+      "attack_id": "T1217",
+      "technique_name": "Browser Bookmark Discovery",
+      "tactics": [
+        "Discovery"
+      ],
+      "engage_activities": [
+        "EAC0011",
+        "EAC0012",
+        "EAC0014",
+        "EAC0015"
+      ]
+    },
+    "T1218": {
+      "attack_id": "T1218",
+      "technique_name": "Signed Binary Proxy Execution",
+      "tactics": [
+        "Defense Evasion"
+      ],
+      "engage_activities": [
+        "EAC0001",
+        "EAC0013",
+        "EAC0014"
+      ]
+    },
+    "T1219": {
+      "attack_id": "T1219",
+      "technique_name": "Remote Access Software",
+      "tactics": [
+        "Command and Control"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0006",
+        "EAC0011",
+        "EAC0012",
+        "EAC0013",
+        "EAC0016"
+      ]
+    },
+    "T1220": {
+      "attack_id": "T1220",
+      "technique_name": "XSL Script Processing",
+      "tactics": [
+        "Defense Evasion"
+      ],
+      "engage_activities": [
+        "EAC0001",
+        "EAC0005",
+        "EAC0013",
+        "EAC0014"
+      ]
+    },
+    "T1221": {
+      "attack_id": "T1221",
+      "technique_name": "Template Injection",
+      "tactics": [
+        "Defense Evasion"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0013",
+        "EAC0022"
+      ]
+    },
+    "T1222": {
+      "attack_id": "T1222",
+      "technique_name": "File and Directory Permissions Modification",
+      "tactics": [
+        "Defense Evasion"
+      ],
+      "engage_activities": [
+        "EAC0018",
+        "EAC0022"
+      ]
+    },
+    "T1480": {
+      "attack_id": "T1480",
+      "technique_name": "Execution Guardrails",
+      "tactics": [
+        "Defense Evasion"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0015",
+        "EAC0019"
+      ]
+    },
+    "T1482": {
+      "attack_id": "T1482",
+      "technique_name": "Domain Trust Discovery",
+      "tactics": [
+        "Discovery"
+      ],
+      "engage_activities": [
+        "EAC0015",
+        "EAC0022"
+      ]
+    },
+    "T1485": {
+      "attack_id": "T1485",
+      "technique_name": "Data Destruction",
+      "tactics": [
+        "Impact"
+      ],
+      "engage_activities": [
+        "EAC0001",
+        "EAC0005",
+        "EAC0011",
+        "EAC0014",
+        "EAC0015"
+      ]
+    },
+    "T1486": {
+      "attack_id": "T1486",
+      "technique_name": "Data Encrypted for Impact",
+      "tactics": [
+        "Impact"
+      ],
+      "engage_activities": [
+        "EAC0014",
+        "EAC0015",
+        "EAC0022"
+      ]
+    },
+    "T1489": {
+      "attack_id": "T1489",
+      "technique_name": "Service Stop",
+      "tactics": [
+        "Impact"
+      ],
+      "engage_activities": [
+        "EAC0018",
+        "EAC0022"
+      ]
+    },
+    "T1490": {
+      "attack_id": "T1490",
+      "technique_name": "Inhibit System Recovery",
+      "tactics": [
+        "Impact"
+      ],
+      "engage_activities": [
+        "EAC0003",
+        "EAC0019"
+      ]
+    },
+    "T1491": {
+      "attack_id": "T1491",
+      "technique_name": "Defacement",
+      "tactics": [
+        "Impact"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0015"
+      ]
+    },
+    "T1495": {
+      "attack_id": "T1495",
+      "technique_name": "Firmware Corruption",
+      "tactics": [
+        "Impact"
+      ],
+      "engage_activities": [
+        "EAC0003"
+      ]
+    },
+    "T1496": {
+      "attack_id": "T1496",
+      "technique_name": "Resource Hijacking",
+      "tactics": [
+        "Impact"
+      ],
+      "engage_activities": [
+        "EAC0001",
+        "EAC0006",
+        "EAC0014"
+      ]
+    },
+    "T1497": {
+      "attack_id": "T1497",
+      "technique_name": "Virtualization/Sandbox Evasion",
+      "tactics": [
+        "Defense Evasion",
+        "Discovery"
+      ],
+      "engage_activities": [
+        "EAC0011",
+        "EAC0015"
+      ]
+    },
+    "T1498": {
+      "attack_id": "T1498",
+      "technique_name": "Network Denial of Service",
+      "tactics": [
+        "Impact"
+      ],
+      "engage_activities": [
+        "EAC0002",
+        "EAC0016"
+      ]
+    },
+    "T1499": {
+      "attack_id": "T1499",
+      "technique_name": "Endpoint Denial of Service",
+      "tactics": [
+        "Impact"
+      ],
+      "engage_activities": [
+        "EAC0007",
+        "EAC0016"
+      ]
+    },
+    "T1505": {
+      "attack_id": "T1505",
+      "technique_name": "Server Software Component",
+      "tactics": [
+        "Persistence"
+      ],
+      "engage_activities": [
+        "EAC0006",
+        "EAC0019"
+      ]
+    },
+    "T1518": {
+      "attack_id": "T1518",
+      "technique_name": "Software Discovery",
+      "tactics": [
+        "Discovery"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0006",
+        "EAC0011",
+        "EAC0014"
+      ]
+    },
+    "T1525": {
+      "attack_id": "T1525",
+      "technique_name": "Implant Internal Image",
+      "tactics": [
+        "Persistence"
+      ],
+      "engage_activities": [
+        "EAC0006",
+        "EAC0018"
+      ]
+    },
+    "T1526": {
+      "attack_id": "T1526",
+      "technique_name": "Cloud Service Discovery",
+      "tactics": [
+        "Discovery"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0011",
+        "EAC0022"
+      ]
+    },
+    "T1528": {
+      "attack_id": "T1528",
+      "technique_name": "Steal Application Access Token",
+      "tactics": [
+        "Credential Access"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0018"
+      ]
+    },
+    "T1529": {
+      "attack_id": "T1529",
+      "technique_name": "System Shutdown/Reboot",
+      "tactics": [
+        "Impact"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0022"
+      ]
+    },
+    "T1530": {
+      "attack_id": "T1530",
+      "technique_name": "Data from Cloud Storage Object",
+      "tactics": [
+        "Collection"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0007",
+        "EAC0008",
+        "EAC0011",
+        "EAC0015",
+        "EAC0016",
+        "EAC0018"
+      ]
+    },
+    "T1531": {
+      "attack_id": "T1531",
+      "technique_name": "Account Access Removal",
+      "tactics": [
+        "Impact"
+      ],
+      "engage_activities": [
+        "EAC0003",
+        "EAC0005",
+        "EAC0006",
+        "EAC0012",
+        "EAC0014",
+        "EAC0018"
+      ]
+    },
+    "T1535": {
+      "attack_id": "T1535",
+      "technique_name": "Unused/Unsupported Cloud Regions",
+      "tactics": [
+        "Defense Evasion"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0018"
+      ]
+    },
+    "T1537": {
+      "attack_id": "T1537",
+      "technique_name": "Transfer Data to Cloud Account",
+      "tactics": [
+        "Exfiltration"
+      ],
+      "engage_activities": [
+        "EAC0002",
+        "EAC0004",
+        "EAC0005",
+        "EAC0015",
+        "EAC0016",
+        "EAC0018"
+      ]
+    },
+    "T1538": {
+      "attack_id": "T1538",
+      "technique_name": "Cloud Service Dashboard",
+      "tactics": [
+        "Discovery"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0007",
+        "EAC0011",
+        "EAC0015"
+      ]
+    },
+    "T1539": {
+      "attack_id": "T1539",
+      "technique_name": "Steal Web Session Cookie",
+      "tactics": [
+        "Credential Access"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0018"
+      ]
+    },
+    "T1542": {
+      "attack_id": "T1542",
+      "technique_name": "Pre-OS Boot",
+      "tactics": [
+        "Defense Evasion",
+        "Persistence"
+      ],
+      "engage_activities": [
+        "EAC0018"
+      ]
+    },
+    "T1543": {
+      "attack_id": "T1543",
+      "technique_name": "Create or Modify System Process",
+      "tactics": [
+        "Persistence",
+        "Privilege Escalation"
+      ],
+      "engage_activities": [
+        "EAC0018",
+        "EAC0019"
+      ]
+    },
+    "T1546": {
+      "attack_id": "T1546",
+      "technique_name": "Event Triggered Execution",
+      "tactics": [
+        "Privilege Escalation",
+        "Persistence"
+      ],
+      "engage_activities": [
+        "EAC0018",
+        "EAC0019"
+      ]
+    },
+    "T1547": {
+      "attack_id": "T1547",
+      "technique_name": "Boot or Logon Autostart Execution",
+      "tactics": [
+        "Persistence",
+        "Privilege Escalation"
+      ],
+      "engage_activities": [
+        "EAC0019"
+      ]
+    },
+    "T1548": {
+      "attack_id": "T1548",
+      "technique_name": "Abuse Elevation Control Mechanism",
+      "tactics": [
+        "Privilege Escalation",
+        "Defense Evasion"
+      ],
+      "engage_activities": [
+        "EAC0018"
+      ]
+    },
+    "T1550": {
+      "attack_id": "T1550",
+      "technique_name": "Use Alternate Authentication Material",
+      "tactics": [
+        "Defense Evasion",
+        "Lateral Movement"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0018"
+      ]
+    },
+    "T1552": {
+      "attack_id": "T1552",
+      "technique_name": "Unsecured Credentials",
+      "tactics": [
+        "Credential Access"
+      ],
+      "engage_activities": [
+        "EAC0003",
+        "EAC0005",
+        "EAC0022"
+      ]
+    },
+    "T1553": {
+      "attack_id": "T1553",
+      "technique_name": "Subvert Trust Controls",
+      "tactics": [
+        "Defense Evasion"
+      ],
+      "engage_activities": [
+        "EAC0001",
+        "EAC0006",
+        "EAC0018"
+      ]
+    },
+    "T1554": {
+      "attack_id": "T1554",
+      "technique_name": "Compromise Client Software Binary",
+      "tactics": [
+        "Persistence"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0006",
+        "EAC0014",
+        "EAC0021"
+      ]
+    },
+    "T1555": {
+      "attack_id": "T1555",
+      "technique_name": "Credentials from Password Stores",
+      "tactics": [
+        "Credential Access"
+      ],
+      "engage_activities": [
+        "EAC0003",
+        "EAC0005",
+        "EAC0011",
+        "EAC0012"
+      ]
+    },
+    "T1556": {
+      "attack_id": "T1556",
+      "technique_name": "Modify Authentication Process",
+      "tactics": [
+        "Credential Access",
+        "Defense Evasion",
+        "Persistence"
+      ],
+      "engage_activities": [
+        "EAC0001",
+        "EAC0018"
+      ]
+    },
+    "T1557": {
+      "attack_id": "T1557",
+      "technique_name": "Man-in-the-Middle",
+      "tactics": [
+        "Credential Access",
+        "Collection"
+      ],
+      "engage_activities": [
+        "EAC0002",
+        "EAC0005",
+        "EAC0011"
+      ]
+    },
+    "T1558": {
+      "attack_id": "T1558",
+      "technique_name": "Steal or Forge Kerberos Tickets",
+      "tactics": [
+        "Credential Access"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0018"
+      ]
+    },
+    "T1559": {
+      "attack_id": "T1559",
+      "technique_name": "Inter-Process Communication",
+      "tactics": [
+        "Execution"
+      ],
+      "engage_activities": [
+        "EAC0001",
+        "EAC0014"
+      ]
+    },
+    "T1560": {
+      "attack_id": "T1560",
+      "technique_name": "Archive Collected Data",
+      "tactics": [
+        "Collection"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0006",
+        "EAC0014"
+      ]
+    },
+    "T1561": {
+      "attack_id": "T1561",
+      "technique_name": "Disk Wipe",
+      "tactics": [
+        "Impact"
+      ],
+      "engage_activities": [
+        "EAC0013",
+        "EAC0014",
+        "EAC0015",
+        "EAC0019"
+      ]
+    },
+    "T1562": {
+      "attack_id": "T1562",
+      "technique_name": "Impair Defenses",
+      "tactics": [
+        "Defense Evasion"
+      ],
+      "engage_activities": [
+        "EAC0003",
+        "EAC0006",
+        "EAC0018"
+      ]
+    },
+    "T1563": {
+      "attack_id": "T1563",
+      "technique_name": "Remote Service Session Hijacking",
+      "tactics": [
+        "Lateral Movement"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0011",
+        "EAC0016",
+        "EAC0018"
+      ]
+    },
+    "T1564": {
+      "attack_id": "T1564",
+      "technique_name": "Hide Artifacts",
+      "tactics": [
+        "Defense Evasion"
+      ],
+      "engage_activities": [
+        "EAC0001",
+        "EAC0014",
+        "EAC0022"
+      ]
+    },
+    "T1565": {
+      "attack_id": "T1565",
+      "technique_name": "Data Manipulation",
+      "tactics": [
+        "Impact"
+      ],
+      "engage_activities": [
+        "EAC0011",
+        "EAC0015"
+      ]
+    },
+    "T1566": {
+      "attack_id": "T1566",
+      "technique_name": "Phishing",
+      "tactics": [
+        "Initial Access"
+      ],
+      "engage_activities": [
+        "EAC0003",
+        "EAC0009",
+        "EAC0011",
+        "EAC0012",
+        "EAC0021"
+      ]
+    },
+    "T1567": {
+      "attack_id": "T1567",
+      "technique_name": "Exfiltration Over Web Service",
+      "tactics": [
+        "Exfiltration"
+      ],
+      "engage_activities": [
+        "EAC0002",
+        "EAC0004",
+        "EAC0005",
+        "EAC0015",
+        "EAC0016",
+        "EAC0018"
+      ]
+    },
+    "T1568": {
+      "attack_id": "T1568",
+      "technique_name": "Dynamic Resolution",
+      "tactics": [
+        "Command and Control"
+      ],
+      "engage_activities": [
+        "EAC0016"
+      ]
+    },
+    "T1569": {
+      "attack_id": "T1569",
+      "technique_name": "System Services",
+      "tactics": [
+        "Execution"
+      ],
+      "engage_activities": [
+        "EAC0001",
+        "EAC0013",
+        "EAC0014"
+      ]
+    },
+    "T1570": {
+      "attack_id": "T1570",
+      "technique_name": "Lateral Tool Transfer",
+      "tactics": [
+        "Lateral Movement"
+      ],
+      "engage_activities": [
+        "EAC0002",
+        "EAC0016"
+      ]
+    },
+    "T1571": {
+      "attack_id": "T1571",
+      "technique_name": "Non-Standard Port",
+      "tactics": [
+        "Command and Control"
+      ],
+      "engage_activities": [
+        "EAC0002",
+        "EAC0016"
+      ]
+    },
+    "T1572": {
+      "attack_id": "T1572",
+      "technique_name": "Protocol Tunneling",
+      "tactics": [
+        "Command and Control"
+      ],
+      "engage_activities": [
+        "EAC0002",
+        "EAC0016"
+      ]
+    },
+    "T1573": {
+      "attack_id": "T1573",
+      "technique_name": "Encrypted Channel",
+      "tactics": [
+        "Command and Control"
+      ],
+      "engage_activities": [
+        "EAC0004",
+        "EAC0014",
+        "EAC0016"
+      ]
+    },
+    "T1574": {
+      "attack_id": "T1574",
+      "technique_name": "Hijack Execution Flow",
+      "tactics": [
+        "Persistence",
+        "Privilege Escalation",
+        "Defense Evasion"
+      ],
+      "engage_activities": [
+        "EAC0018"
+      ]
+    },
+    "T1578": {
+      "attack_id": "T1578",
+      "technique_name": "Modify Cloud Compute Infrastructure",
+      "tactics": [
+        "Defense Evasion"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0006",
+        "EAC0014"
+      ]
+    },
+    "T1580": {
+      "attack_id": "T1580",
+      "technique_name": "Cloud Infrastructure Discovery",
+      "tactics": [
+        "Discovery"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0007",
+        "EAC0011",
+        "EAC0016"
+      ]
+    },
+    "T1589": {
+      "attack_id": "T1589",
+      "technique_name": "Gather Victim Identity Information",
+      "tactics": [
+        "Reconnaissance"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0011",
+        "EAC0012"
+      ]
+    },
+    "T1590": {
+      "attack_id": "T1590",
+      "technique_name": "Gather Victim Network Information",
+      "tactics": [
+        "Reconnaissance"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0011"
+      ]
+    },
+    "T1591": {
+      "attack_id": "T1591",
+      "technique_name": "Gather Victim Org Information",
+      "tactics": [
+        "Reconnaissance"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0011"
+      ]
+    },
+    "T1592": {
+      "attack_id": "T1592",
+      "technique_name": "Gather Victim Host Information",
+      "tactics": [
+        "Reconnaissance"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0008",
+        "EAC0011",
+        "EAC0022"
+      ]
+    },
+    "T1593": {
+      "attack_id": "T1593",
+      "technique_name": "Search Open Websites/Domains",
+      "tactics": [
+        "Reconnaissance"
+      ],
+      "engage_activities": [
+        "EAC0012",
+        "EAC0015"
+      ]
+    },
+    "T1594": {
+      "attack_id": "T1594",
+      "technique_name": "Search Victim-Owned Websites",
+      "tactics": [
+        "Reconnaissance"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0012",
+        "EAC0015"
+      ]
+    },
+    "T1595": {
+      "attack_id": "T1595",
+      "technique_name": "Active Scanning",
+      "tactics": [
+        "Reconnaissance"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0007",
+        "EAC0011",
+        "EAC0016"
+      ]
+    },
+    "T1596": {
+      "attack_id": "T1596",
+      "technique_name": "Search Open Technical Databases",
+      "tactics": [
+        "Reconnaissance"
+      ],
+      "engage_activities": [
+        "EAC0015"
+      ]
+    },
+    "T1597": {
+      "attack_id": "T1597",
+      "technique_name": "Search Closed Sources",
+      "tactics": [
+        "Reconnaissance"
+      ],
+      "engage_activities": [
+        "EAC0015"
+      ]
+    },
+    "T1598": {
+      "attack_id": "T1598",
+      "technique_name": "Phishing for Information",
+      "tactics": [
+        "Reconnaissance"
+      ],
+      "engage_activities": [
+        "EAC0011",
+        "EAC0012",
+        "EAC0015"
+      ]
+    },
+    "T1599": {
+      "attack_id": "T1599",
+      "technique_name": "Network Boundary Bridging",
+      "tactics": [
+        "Defense Evasion"
+      ],
+      "engage_activities": [
+        "EAC0002",
+        "EAC0016",
+        "EAC0018"
+      ]
+    },
+    "T1600": {
+      "attack_id": "T1600",
+      "technique_name": "Weaken Encryption",
+      "tactics": [
+        "Defense Evasion"
+      ],
+      "engage_activities": [
+        "EAC0002",
+        "EAC0011",
+        "EAC0015",
+        "EAC0018"
+      ]
+    },
+    "T1601": {
+      "attack_id": "T1601",
+      "technique_name": "Modify System Image",
+      "tactics": [
+        "Defense Evasion"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0018",
+        "EAC0019",
+        "EAC0022"
+      ]
+    },
+    "T1602": {
+      "attack_id": "T1602",
+      "technique_name": "Data from Configuration Repository",
+      "tactics": [
+        "Collection"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0008",
+        "EAC0011",
+        "EAC0015",
+        "EAC0018",
+        "EAC0022"
+      ]
+    },
+    "T1606": {
+      "attack_id": "T1606",
+      "technique_name": "Forge Web Credentials",
+      "tactics": [
+        "Credential Access"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0018",
+        "EAC0022"
+      ]
+    },
+    "T1609": {
+      "attack_id": "T1609",
+      "technique_name": "Container Administration Command",
+      "tactics": [
+        "Execution"
+      ],
+      "engage_activities": [
+        "EAC0018"
+      ]
+    },
+    "T1610": {
+      "attack_id": "T1610",
+      "technique_name": "Deploy Container",
+      "tactics": [
+        "Defense Evasion",
+        "Execution"
+      ],
+      "engage_activities": [
+        "EAC0016"
+      ]
+    },
+    "T1611": {
+      "attack_id": "T1611",
+      "technique_name": "Escape to Host",
+      "tactics": [
+        "Privilege Escalation"
+      ],
+      "engage_activities": [
+        "EAC0018"
+      ]
+    },
+    "T1612": {
+      "attack_id": "T1612",
+      "technique_name": "Build Image on Host",
+      "tactics": [
+        "Defense Evasion"
+      ],
+      "engage_activities": [
+        "EAC0018"
+      ]
+    },
+    "T1613": {
+      "attack_id": "T1613",
+      "technique_name": "Container and Resource Discovery",
+      "tactics": [
+        "Discovery"
+      ],
+      "engage_activities": [
+        "EAC0005",
+        "EAC0006",
+        "EAC0011",
+        "EAC0014"
+      ]
+    },
+    "T1614": {
+      "attack_id": "T1614",
+      "technique_name": "System Location Discovery",
+      "tactics": [
+        "Discovery"
+      ],
+      "engage_activities": [
+        "EAC0001",
+        "EAC0011",
+        "EAC0014",
+        "EAC0015"
+      ]
+    }
+  },
+  "threat_levels": {
     "low": {
+      "threshold": 0.3,
       "max_actions": 2,
-      "allowed_activities": ["EAC0002", "EAC0003", "EAC0004", "EAC0011"],
-      "description": "Passive monitoring with minimal honeytokens"
+      "action_types": [
+        "passive"
+      ],
+      "description": "Low threat - passive monitoring only"
     },
     "medium": {
+      "threshold": 0.5,
       "max_actions": 4,
-      "allowed_activities": ["EAC0002", "EAC0003", "EAC0004", "EAC0005", "EAC0007", "EAC0008", "EAC0011", "EAC0015"],
-      "description": "Active deception with lures and decoy content"
+      "action_types": [
+        "passive",
+        "active"
+      ],
+      "description": "Medium threat - active deception"
     },
     "high": {
+      "threshold": 0.7,
       "max_actions": 6,
-      "allowed_activities": ["EAC0001", "EAC0002", "EAC0003", "EAC0004", "EAC0005", "EAC0006", "EAC0007", "EAC0008", "EAC0009", "EAC0010", "EAC0011", "EAC0013", "EAC0015", "EAC0016"],
-      "description": "Aggressive misdirection with honeypots and decoy systems"
+      "action_types": [
+        "passive",
+        "active",
+        "aggressive"
+      ],
+      "description": "High threat - aggressive engagement"
     },
     "critical": {
+      "threshold": 0.9,
       "max_actions": 10,
-      "allowed_activities": ["EAC0001", "EAC0002", "EAC0003", "EAC0004", "EAC0005", "EAC0006", "EAC0007", "EAC0008", "EAC0009", "EAC0010", "EAC0011", "EAC0012", "EAC0013", "EAC0014", "EAC0015", "EAC0016", "EAC0017", "EAC0018", "EAC0019", "EAC0020"],
-      "description": "Full engagement with all deception capabilities"
+      "action_types": [
+        "passive",
+        "active",
+        "aggressive",
+        "containment"
+      ],
+      "description": "Critical threat - full engagement with containment"
     }
   }
 }
