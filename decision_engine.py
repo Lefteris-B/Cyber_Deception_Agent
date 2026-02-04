@@ -4,6 +4,7 @@ Integrates LLM reasoning with MITRE ATT&CK and Engage frameworks.
 """
 
 import json
+import os
 import uuid
 from typing import Optional
 from anthropic import Anthropic
@@ -47,7 +48,10 @@ class DecisionEngine:
         self.memory = memory
         self.engage_loader = engage_loader
         self.classifier = ThreatClassifier(config)
-        self.client = Anthropic()
+        api_key = os.getenv("ANTHROPIC_API_KEY")
+        if not api_key:
+            raise RuntimeError("ANTHROPIC_API_KEY not set")
+        self.client = Anthropic(api_key=api_key)
     
     def decide(self, alert: AlertInput) -> ActionPlan:
         """Main decision method. Analyzes alert and returns an action plan."""
