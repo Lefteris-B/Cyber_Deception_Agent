@@ -1,0 +1,39 @@
+# Cyber Deception Agent Dependencies
+# MITRE ATT&CK + Engage Framework
+
+# Core Dependencies
+anthropic>=0.40.0          # Anthropic API client for LLM integration
+
+# Standard library modules used (no install needed):
+# - json
+# - uuid
+# - datetime
+# - dataclasses
+# - typing
+# - pathlib
+# - argparse
+
+# Optional: Enhanced functionality
+# pydantic>=2.0.0           # Stricter data validation
+# rich>=13.0.0              # Better CLI output formatting
+# python-dotenv>=1.0.0      # Environment variable management
+
+# Optional: Persistent storage backends
+# redis>=5.0.0              # Redis-based memory persistence
+# sqlalchemy>=2.0.0         # SQL database support
+# pymongo>=4.6.0            # MongoDB support
+
+# Optional: API/Integration
+# fastapi>=0.109.0          # REST API for alert ingestion
+# uvicorn>=0.27.0           # ASGI server for FastAPI
+# httpx>=0.26.0             # Async HTTP client
+# aiohttp>=3.9.0            # Alternative async HTTP
+
+# Optional: Testing
+# pytest>=8.0.0             # Testing framework
+# pytest-asyncio>=0.23.0    # Async test support
+# pytest-cov>=4.1.0         # Coverage reporting
+
+# Optional: Monitoring & Logging
+# structlog>=24.1.0         # Structured logging
+# prometheus-client>=0.19.0 # Metrics export
