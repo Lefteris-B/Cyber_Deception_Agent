@@ -25,10 +25,16 @@ class MemoryConfig:
     max_alerts_per_profile: int = 100
 
 
+import os
+
+# Get the directory where this module is located
+_MODULE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+
 @dataclass
 class AgentConfig:
     """Main agent configuration."""
-    engage_data_path: str = "./data/engage_data.json"
+    engage_data_path: str = os.path.join(_MODULE_DIR, "data", "engage_data.json")
     
     # LLM settings
     anthropic_model: str = "claude-sonnet-4-20250514"

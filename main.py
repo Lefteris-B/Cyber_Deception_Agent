@@ -63,8 +63,8 @@ Examples:
     parser.add_argument(
         "--data-path",
         type=str,
-        default="./data/engage_data.json",
-        help="Path to Engage data file"
+        default=None,  # Will use config default if not specified
+        help="Path to Engage data file (default: auto-detect)"
     )
     
     parser.add_argument(
@@ -195,7 +195,9 @@ def main():
     args = parse_args()
     
     # Configure agent
-    config = AgentConfig(engage_data_path=args.data_path)
+    config = AgentConfig()
+    if args.data_path:
+        config.engage_data_path = args.data_path
     
     # Initialize agent
     use_llm = not args.no_llm
